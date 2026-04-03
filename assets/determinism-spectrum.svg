@@ -1,107 +1,111 @@
-<svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+<svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
 
-  <text x="400" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#1e293b">Determinism Spectrum</text>
-  <text x="400" y="48" text-anchor="middle" font-size="12" fill="#64748b">Position any security property to understand its current assurance level</text>
+  <text x="400" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#000">Determinism Spectrum</text>
+  <text x="400" y="48" text-anchor="middle" font-size="12" fill="#666">Position any security property to understand its current assurance level</text>
 
-  <!-- Gradient bar -->
-  <defs>
-    <linearGradient id="spectrumGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#fecaca"/>
-      <stop offset="30%" style="stop-color:#fef08a"/>
-      <stop offset="60%" style="stop-color:#bbf7d0"/>
-      <stop offset="100%" style="stop-color:#bfdbfe"/>
-    </linearGradient>
-  </defs>
-  <rect x="50" y="70" width="700" height="30" rx="6" fill="url(#spectrumGrad)" stroke="#cbd5e1" stroke-width="1"/>
+  <!-- Spectrum bar -->
+  <rect x="50" y="70" width="700" height="30" fill="#e5e5e5" stroke="#000" stroke-width="1"/>
+  <!-- Progressive fill to show direction -->
+  <rect x="50" y="70" width="70" height="30" fill="#fff" stroke="none"/>
+  <rect x="120" y="70" width="70" height="30" fill="#f0f0f0" stroke="none"/>
+  <rect x="190" y="70" width="70" height="30" fill="#e5e5e5" stroke="none"/>
+  <rect x="260" y="70" width="70" height="30" fill="#ddd" stroke="none"/>
+  <rect x="330" y="70" width="70" height="30" fill="#d0d0d0" stroke="none"/>
+  <rect x="400" y="70" width="70" height="30" fill="#c0c0c0" stroke="none"/>
+  <rect x="470" y="70" width="70" height="30" fill="#aaa" stroke="none"/>
+  <rect x="540" y="70" width="70" height="30" fill="#888" stroke="none"/>
+  <rect x="610" y="70" width="70" height="30" fill="#666" stroke="none"/>
+  <rect x="680" y="70" width="70" height="30" fill="#444" stroke="none"/>
+  <rect x="50" y="70" width="700" height="30" fill="none" stroke="#000" stroke-width="1"/>
 
   <!-- Tick marks and labels -->
-  <g font-size="9" fill="#475569" text-anchor="middle">
+  <g font-size="9" fill="#000" text-anchor="middle">
     <!-- Level 0 -->
-    <line x1="50" y1="100" x2="50" y2="110" stroke="#94a3b8"/>
+    <line x1="50" y1="100" x2="50" y2="110" stroke="#000"/>
     <text x="50" y="122">0</text>
-    <text x="50" y="134" font-size="8" fill="#94a3b8">None</text>
+    <text x="50" y="134" font-size="8" fill="#999">None</text>
 
-    <!-- Level 1 - Named -->
-    <line x1="120" y1="100" x2="120" y2="110" stroke="#94a3b8"/>
+    <!-- Level 1 -->
+    <line x1="120" y1="100" x2="120" y2="110" stroke="#000"/>
     <text x="120" y="122">1</text>
-    <text x="120" y="134" font-weight="bold" fill="#dc2626">Named</text>
-    <text x="120" y="146" font-size="8" fill="#94a3b8">Phase 1</text>
+    <text x="120" y="134" font-weight="bold">Named</text>
+    <text x="120" y="146" font-size="8" fill="#999">Phase 1</text>
 
-    <!-- Level 2 - Mapped -->
-    <line x1="190" y1="100" x2="190" y2="110" stroke="#94a3b8"/>
+    <!-- Level 2 -->
+    <line x1="190" y1="100" x2="190" y2="110" stroke="#000"/>
     <text x="190" y="122">2</text>
-    <text x="190" y="134" font-weight="bold" fill="#ea580c">Mapped</text>
-    <text x="190" y="146" font-size="8" fill="#94a3b8">Phase 2</text>
+    <text x="190" y="134" font-weight="bold">Mapped</text>
+    <text x="190" y="146" font-size="8" fill="#999">Phase 2</text>
 
-    <!-- Level 3 - Heuristic -->
-    <line x1="260" y1="100" x2="260" y2="110" stroke="#94a3b8"/>
+    <!-- Level 3 -->
+    <line x1="260" y1="100" x2="260" y2="110" stroke="#000"/>
     <text x="260" y="122">3</text>
-    <text x="260" y="134" font-weight="bold" fill="#d97706">Heuristic</text>
-    <text x="260" y="146" font-size="8" fill="#94a3b8">Phase 3</text>
+    <text x="260" y="134" font-weight="bold">Heuristic</text>
+    <text x="260" y="146" font-size="8" fill="#999">Phase 3</text>
 
-    <!-- Level 4 - Measured -->
-    <line x1="330" y1="100" x2="330" y2="110" stroke="#94a3b8"/>
+    <!-- Level 4 -->
+    <line x1="330" y1="100" x2="330" y2="110" stroke="#000"/>
     <text x="330" y="122">4</text>
-    <text x="330" y="134" font-weight="bold" fill="#ca8a04">Measured</text>
-    <text x="330" y="146" font-size="8" fill="#94a3b8">Phase 4</text>
+    <text x="330" y="134" font-weight="bold">Measured</text>
+    <text x="330" y="146" font-size="8" fill="#999">Phase 4</text>
 
-    <!-- Level 5 - Modeled -->
-    <line x1="400" y1="100" x2="400" y2="110" stroke="#94a3b8"/>
+    <!-- Level 5 -->
+    <line x1="400" y1="100" x2="400" y2="110" stroke="#000"/>
     <text x="400" y="122">5</text>
-    <text x="400" y="134" font-weight="bold" fill="#65a30d">Modeled</text>
-    <text x="400" y="146" font-size="8" fill="#94a3b8">Phase 5</text>
+    <text x="400" y="134" font-weight="bold">Modeled</text>
+    <text x="400" y="146" font-size="8" fill="#999">Phase 5</text>
 
-    <!-- Level 6 - Explained -->
-    <line x1="470" y1="100" x2="470" y2="110" stroke="#94a3b8"/>
+    <!-- Level 6 -->
+    <line x1="470" y1="100" x2="470" y2="110" stroke="#000"/>
     <text x="470" y="122">6</text>
-    <text x="470" y="134" font-weight="bold" fill="#16a34a">Explained</text>
-    <text x="470" y="146" font-size="8" fill="#94a3b8">Phase 6</text>
+    <text x="470" y="134" font-weight="bold">Explained</text>
+    <text x="470" y="146" font-size="8" fill="#999">Phase 6</text>
 
-    <!-- Level 7 - Formalized -->
-    <line x1="540" y1="100" x2="540" y2="110" stroke="#94a3b8"/>
+    <!-- Level 7 -->
+    <line x1="540" y1="100" x2="540" y2="110" stroke="#000"/>
     <text x="540" y="122">7</text>
-    <text x="540" y="134" font-weight="bold" fill="#0d9488">Formalized</text>
-    <text x="540" y="146" font-size="8" fill="#94a3b8">Phase 7</text>
+    <text x="540" y="134" font-weight="bold">Formalized</text>
+    <text x="540" y="146" font-size="8" fill="#999">Phase 7</text>
 
-    <!-- Level 8 - Constrained -->
-    <line x1="610" y1="100" x2="610" y2="110" stroke="#94a3b8"/>
+    <!-- Level 8 -->
+    <line x1="610" y1="100" x2="610" y2="110" stroke="#000"/>
     <text x="610" y="122">8</text>
-    <text x="610" y="134" font-weight="bold" fill="#2563eb">Constrained</text>
-    <text x="610" y="146" font-size="8" fill="#94a3b8">Phase 8</text>
+    <text x="610" y="134" font-weight="bold">Constrained</text>
+    <text x="610" y="146" font-size="8" fill="#999">Phase 8</text>
 
-    <!-- Level 9 - Proven -->
-    <line x1="680" y1="100" x2="680" y2="110" stroke="#94a3b8"/>
+    <!-- Level 9 -->
+    <line x1="680" y1="100" x2="680" y2="110" stroke="#000"/>
     <text x="680" y="122">9</text>
-    <text x="680" y="134" font-weight="bold" fill="#4f46e5">Proven</text>
-    <text x="680" y="146" font-size="8" fill="#94a3b8">Phase 9</text>
+    <text x="680" y="134" font-weight="bold">Proven</text>
+    <text x="680" y="146" font-size="8" fill="#999">Phase 9</text>
 
-    <!-- Level 10 - Evolving -->
-    <line x1="750" y1="100" x2="750" y2="110" stroke="#94a3b8"/>
+    <!-- Level 10 -->
+    <line x1="750" y1="100" x2="750" y2="110" stroke="#000"/>
     <text x="750" y="122">10</text>
-    <text x="750" y="134" font-weight="bold" fill="#7c3aed">Evolving</text>
-    <text x="750" y="146" font-size="8" fill="#94a3b8">Phase 10</text>
+    <text x="750" y="134" font-weight="bold">Evolving</text>
+    <text x="750" y="146" font-size="8" fill="#999">Phase 10</text>
   </g>
 
   <!-- Arrow labels -->
-  <text x="120" y="84" text-anchor="middle" font-size="9" fill="#dc2626">Low determinism</text>
-  <text x="680" y="84" text-anchor="middle" font-size="9" fill="#4f46e5">High determinism</text>
-  <line x1="180" y1="82" x2="620" y2="82" stroke="#94a3b8" stroke-width="0.5"/>
+  <text x="120" y="84" text-anchor="middle" font-size="9" fill="#999">Low determinism</text>
+  <text x="680" y="84" text-anchor="middle" font-size="9" fill="#000">High determinism</text>
+  <line x1="180" y1="82" x2="620" y2="82" stroke="#999" stroke-width="0.5"/>
 
   <!-- Example properties -->
-  <text x="400" y="180" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e293b">Example Property Positions</text>
+  <text x="400" y="180" text-anchor="middle" font-size="11" font-weight="bold" fill="#000">Example Property Positions</text>
 
   <!-- Novel jailbreak -->
-  <circle cx="260" cy="205" r="6" fill="#d97706"/>
-  <text x="275" y="209" font-size="10" fill="#1e293b">Novel jailbreak detection — heuristic, volatile</text>
+  <rect x="254" y="199" width="8" height="8" fill="#000"/>
+  <text x="275" y="209" font-size="10" fill="#000">Novel jailbreak detection — heuristic, volatile</text>
 
   <!-- Input validation -->
-  <circle cx="540" cy="225" r="6" fill="#0d9488"/>
-  <text x="555" y="229" font-size="10" fill="#1e293b">Input validation policy — formalized, stable</text>
+  <rect x="534" y="219" width="8" height="8" fill="#000"/>
+  <text x="555" y="229" font-size="10" fill="#000">Input validation policy — formalized, stable</text>
 
   <!-- Permission model -->
-  <circle cx="680" cy="245" r="6" fill="#4f46e5"/>
-  <text x="695" y="249" font-size="10" fill="#1e293b">Agent permission model — proven, critical</text>
+  <rect x="674" y="239" width="8" height="8" fill="#000"/>
+  <text x="695" y="249" font-size="10" fill="#000">Agent permission model — proven, critical</text>
 
   <!-- Bottom -->
-  <text x="400" y="275" text-anchor="middle" font-size="10" fill="#94a3b8">For any property: identify current level, identify target level, the gap defines the work required.</text>
+  <text x="400" y="275" text-anchor="middle" font-size="10" fill="#999">For any property: identify current level, identify target level, the gap defines the work required.</text>
 </svg>
