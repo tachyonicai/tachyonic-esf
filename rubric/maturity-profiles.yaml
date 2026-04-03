@@ -1,0 +1,80 @@
+# ESF Maturity Profiles
+# Common system archetypes and their typical scoring patterns.
+# Use to identify which profile your system most closely matches.
+
+profiles:
+
+  - name: "Reactive"
+    description: "Ad-hoc heuristics, minimal measurement, no formalization. The system reacts to incidents but doesn't systematically mature."
+    typical_scores:
+      phase_1: 1
+      phase_2: 0-1
+      phase_3: 2
+      phase_4: 0-1
+      phase_5: 0
+      phase_6: 0
+      phase_7: 0-1
+      phase_8: 0
+      phase_9: 0
+      phase_10: 0-1
+    priority_next: "Phase 4 (Measure) — you can't improve what you don't measure. Instrument your existing heuristics."
+
+  - name: "Operational"
+    description: "Good detection and measurement, but limited causal understanding and no formal guarantees. The system catches threats but doesn't understand why they work."
+    typical_scores:
+      phase_1: 3
+      phase_2: 2-3
+      phase_3: 3
+      phase_4: 3
+      phase_5: 2-3
+      phase_6: 1
+      phase_7: 1
+      phase_8: 0-1
+      phase_9: 0
+      phase_10: 2
+    priority_next: "Phase 6 (Explain) — invest in root cause analysis to move from detecting symptoms to eliminating causes."
+
+  - name: "Hardened"
+    description: "Formal rules and structural constraints exist but may not be grounded in causal understanding. Rules work but the team can't explain why certain architectures are vulnerable."
+    typical_scores:
+      phase_1: 3
+      phase_2: 2
+      phase_3: 3
+      phase_4: 3
+      phase_5: 1-2
+      phase_6: 1
+      phase_7: 3
+      phase_8: 2
+      phase_9: 0-1
+      phase_10: 2
+    priority_next: "Phase 6 (Explain) — validate that formal rules are grounded in causal understanding, not just institutional knowledge."
+
+  - name: "Research-grade"
+    description: "Deep understanding of threats and causes, but limited translation into enforcement. The team knows what's wrong but hasn't hardened the architecture."
+    typical_scores:
+      phase_1: 3-4
+      phase_2: 3
+      phase_3: 2-3
+      phase_4: 3
+      phase_5: 3
+      phase_6: 3
+      phase_7: 1-2
+      phase_8: 0-1
+      phase_9: 0
+      phase_10: 2-3
+    priority_next: "Phase 7 (Formalize) — convert validated causal invariants into deterministic policy rules."
+
+  - name: "Mature"
+    description: "Full spectrum coverage with formal verification applied selectively to highest-consequence properties. The system is both adaptive and provably correct where it matters most."
+    typical_scores:
+      phase_1: 4
+      phase_2: 3-4
+      phase_3: 3-4
+      phase_4: 4
+      phase_5: 3-4
+      phase_6: 3
+      phase_7: 3-4
+      phase_8: 3
+      phase_9: 2-3
+      phase_10: 3-4
+    priority_next: "Continuous — expand Phase 9 coverage to additional high-consequence properties; refine Phase 10 evolution mechanisms."

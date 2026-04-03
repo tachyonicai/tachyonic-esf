@@ -1,0 +1,91 @@
+# ESF ↔ MITRE ATLAS Mapping
+# Maps ESF phases to MITRE ATLAS tactics and techniques for AI/ML systems.
+# Reference: https://atlas.mitre.org/
+
+framework: "MITRE ATLAS"
+esf_version: "0.1.0"
+
+# ATLAS organizes adversarial techniques by tactic (goal).
+# ESF maps each tactic to the phases most relevant for defense.
+
+mappings:
+
+  - atlas_tactic: "Reconnaissance"
+    atlas_id: "TA0001"
+    description: "Adversary gathers information about the AI system"
+    esf_phases:
+      primary: [1, 2]
+      rationale: "Taxonomy (Phase 1) should classify reconnaissance techniques. Ontology (Phase 2) should map what information is exposed at each interface."
+    tachyonic_categories: ["SPL"]
+
+  - atlas_tactic: "Resource Development"
+    atlas_id: "TA0002"
+    description: "Adversary develops resources to support attack (poisoned data, adversarial examples)"
+    esf_phases:
+      primary: [1, 2, 3]
+      rationale: "Classify resource types (Phase 1), map supply chain relationships (Phase 2), deploy integrity verification heuristics (Phase 3)."
+    tachyonic_categories: ["SC"]
+
+  - atlas_tactic: "Initial Access"
+    atlas_id: "TA0003"
+    description: "Adversary gains initial access to the AI system"
+    esf_phases:
+      primary: [1, 2, 3, 7, 8]
+      rationale: "Classify access vectors (Phase 1), map trust boundaries (Phase 2), deploy input validation heuristics (Phase 3), formalize access policies (Phase 7), structurally enforce access boundaries (Phase 8)."
+    tachyonic_categories: ["PI", "VI", "VE"]
+
+  - atlas_tactic: "ML Model Access"
+    atlas_id: "TA0004"
+    description: "Adversary gains access to the ML model itself"
+    esf_phases:
+      primary: [2, 3, 8]
+      rationale: "Map model access interfaces (Phase 2), deploy access monitoring heuristics (Phase 3), structurally enforce model access boundaries (Phase 8)."
+    tachyonic_categories: ["SID", "SPL"]
+
+  - atlas_tactic: "Execution"
+    atlas_id: "TA0005"
+    description: "Adversary causes the AI system to execute adversarial inputs"
+    esf_phases:
+      primary: [3, 5, 7, 8]
+      rationale: "Deploy execution monitoring heuristics (Phase 3), model baseline execution patterns (Phase 5), formalize execution policies (Phase 7), structurally constrain execution scope (Phase 8)."
+    tachyonic_categories: ["PI", "JB", "EA", "MT"]
+
+  - atlas_tactic: "Persistence"
+    atlas_id: "TA0006"
+    description: "Adversary maintains access across sessions or model updates"
+    esf_phases:
+      primary: [2, 3, 6, 8]
+      rationale: "Map persistence vectors (Phase 2), deploy session integrity heuristics (Phase 3), analyze root cause of persistence mechanisms (Phase 6), structurally enforce session isolation (Phase 8)."
+    tachyonic_categories: ["MT", "VE"]
+
+  - atlas_tactic: "Evasion"
+    atlas_id: "TA0007"
+    description: "Adversary avoids detection by the AI system's defenses"
+    esf_phases:
+      primary: [4, 5, 10]
+      rationale: "Measure detection effectiveness against evasion (Phase 4), model adversarial adaptation statistically (Phase 5), evolve defenses in response (Phase 10)."
+    tachyonic_categories: ["JB", "PI", "VI"]
+
+  - atlas_tactic: "Collection"
+    atlas_id: "TA0008"
+    description: "Adversary gathers data from the AI system"
+    esf_phases:
+      primary: [2, 3, 8]
+      rationale: "Map data egress paths (Phase 2), deploy data loss prevention heuristics (Phase 3), structurally constrain data egress (Phase 8)."
+    tachyonic_categories: ["SID", "SPL"]
+
+  - atlas_tactic: "Exfiltration"
+    atlas_id: "TA0009"
+    description: "Adversary extracts data from the AI system"
+    esf_phases:
+      primary: [3, 7, 8, 9]
+      rationale: "Deploy exfiltration detection heuristics (Phase 3), formalize data flow policies (Phase 7), structurally enforce egress constraints (Phase 8), formally verify data containment properties (Phase 9)."
+    tachyonic_categories: ["SID"]
+
+  - atlas_tactic: "Impact"
+    atlas_id: "TA0010"
+    description: "Adversary causes harm through the AI system"
+    esf_phases:
+      primary: [3, 7, 8, 9]
+      rationale: "Deploy impact mitigation heuristics — circuit breakers, rollback (Phase 3), formalize safety constraints (Phase 7), structurally enforce blast radius limits (Phase 8), formally verify safety properties (Phase 9)."
+    tachyonic_categories: ["EA", "IOH", "UC"]

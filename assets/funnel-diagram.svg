@@ -1,0 +1,47 @@
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+
+  <text x="300" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1e293b">The Funnel Principle</text>
+  <text x="300" y="50" text-anchor="middle" font-size="12" fill="#64748b">Not everything moves to the highest phase</text>
+
+  <!-- Funnel shape -->
+  <polygon points="100,80 500,80 420,340 180,340" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+
+  <!-- Phase bands -->
+  <rect x="110" y="85" width="380" height="45" rx="4" fill="#ede9fe" opacity="0.8"/>
+  <text x="135" y="112" font-size="12" font-weight="bold" fill="#6d28d9">Phase 1-3</text>
+  <text x="240" y="112" font-size="11" fill="#1e293b">Name, Relate, Guess</text>
+  <text x="440" y="112" text-anchor="end" font-size="11" font-weight="bold" fill="#6d28d9">Many items</text>
+
+  <rect x="140" y="138" width="320" height="45" rx="4" fill="#fef3c7" opacity="0.8"/>
+  <text x="165" y="165" font-size="12" font-weight="bold" fill="#b45309">Phase 4-5</text>
+  <text x="255" y="165" font-size="11" fill="#1e293b">Measure, Model</text>
+  <text x="415" y="165" text-anchor="end" font-size="11" font-weight="bold" fill="#b45309">Fewer</text>
+
+  <rect x="170" y="191" width="260" height="45" rx="4" fill="#dcfce7" opacity="0.8"/>
+  <text x="195" y="218" font-size="12" font-weight="bold" fill="#15803d">Phase 6-7</text>
+  <text x="285" y="218" font-size="11" fill="#1e293b">Explain, Formalize</text>
+  <text x="390" y="218" text-anchor="end" font-size="11" font-weight="bold" fill="#15803d">Fewer still</text>
+
+  <rect x="195" y="244" width="210" height="45" rx="4" fill="#dbeafe" opacity="0.8"/>
+  <text x="220" y="271" font-size="12" font-weight="bold" fill="#1d4ed8">Phase 8-9</text>
+  <text x="310" y="271" font-size="11" fill="#1e293b">Constrain, Prove</text>
+  <text x="370" y="271" text-anchor="end" font-size="11" font-weight="bold" fill="#1d4ed8">Critical only</text>
+
+  <rect x="185" y="297" width="230" height="38" rx="4" fill="#fce7f3" opacity="0.8"/>
+  <text x="210" y="321" font-size="12" font-weight="bold" fill="#be185d">Phase 10</text>
+  <text x="300" y="321" font-size="11" fill="#1e293b">Evolve</text>
+  <text x="380" y="321" text-anchor="end" font-size="11" font-weight="bold" fill="#be185d">Everything</text>
+
+  <!-- Side labels -->
+  <text x="65" y="115" text-anchor="end" font-size="10" fill="#94a3b8">Heuristics</text>
+  <text x="65" y="270" text-anchor="end" font-size="10" fill="#94a3b8">Proof</text>
+  <line x1="70" y1="90" x2="70" y2="280" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr)"/>
+
+  <text x="535" y="115" font-size="10" fill="#94a3b8">Low cost</text>
+  <text x="535" y="130" font-size="10" fill="#94a3b8">Fast to deploy</text>
+  <text x="535" y="255" font-size="10" fill="#94a3b8">High cost</text>
+  <text x="535" y="270" font-size="10" fill="#94a3b8">High assurance</text>
+
+  <!-- Bottom note -->
+  <text x="300" y="375" text-anchor="middle" font-size="11" fill="#64748b">Push properties higher only when consequence, stability, frequency, and boundary position justify it.</text>
+</svg>

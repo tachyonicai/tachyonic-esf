@@ -1,0 +1,35 @@
+# ESF Gap Analysis Template
+# After completing an assessment, use this template to prioritize which gaps to close.
+
+esf_version: "0.1.0"
+system_name: ""
+assessed_by: ""
+date: ""
+
+# For each gap (where current_score < target_score), evaluate priority factors.
+
+priority_factors:
+  consequence: "How catastrophic is exploitation in this gap area? (critical / high / medium / low)"
+  dependency: "Does this gap block maturation of other phases? (blocking / enabling / independent)"
+  cost: "Estimated effort to close the gap (high / medium / low)"
+  time: "Estimated time to close the gap (months)"
+
+gaps:
+
+  - phase: ""
+    current_score: 0
+    target_score: 0
+    consequence: ""
+    dependency: ""
+    cost: ""
+    time_estimate: ""
+    next_action: ""
+    notes: ""
+
+# Priority ordering rules:
+#
+# 1. Critical consequence + blocking dependency → highest priority
+# 2. High consequence + any dependency → high priority
+# 3. Blocking dependency + any consequence → high priority
+# 4. Low cost + quick time → consider as quick wins regardless of other factors
+# 5. All other gaps → prioritize by consequence

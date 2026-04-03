@@ -1,0 +1,91 @@
+# ESF ↔ OWASP Top 10 for Agentic Applications (2026) Mapping
+# For each agentic risk, which ESF phases are most relevant.
+
+framework: "OWASP Top 10 for Agentic Applications (2026)"
+esf_version: "0.1.0"
+
+mappings:
+
+  - owasp_id: "ASI01"
+    name: "Agent Goal Hijack"
+    esf_phases:
+      phase_1: "Classify goal manipulation vectors: instruction injection, tool output manipulation, external content influence"
+      phase_2: "Map the goal derivation chain — where does the agent's objective come from, and which inputs can influence it?"
+      phase_3: "Deploy goal integrity checks: periodically re-derive the agent's objective and compare to original task"
+      phase_5: "Model baseline goal-action alignment; detect divergence statistically"
+      phase_6: "Root cause: goal state is mutable through untrusted input channels"
+      phase_8: "Structurally separate goal specification from data processing channels"
+
+  - owasp_id: "ASI02"
+    name: "Tool Misuse & Exploitation"
+    esf_phases:
+      phase_1: "Classify tool types, their capabilities, and their risk levels"
+      phase_2: "Map agent → tool permissions and tool → asset access chains"
+      phase_3: "Deploy scope guards and parameter validation on tool invocations"
+      phase_6: "Root cause: tools accept agent-supplied parameters without structural validation"
+      phase_7: "Formalize tool invocation policies as deterministic predicates"
+      phase_8: "Structurally enforce capability-based tool access with least-privilege architecture"
+
+  - owasp_id: "ASI03"
+    name: "Privilege & Identity Compromise"
+    esf_phases:
+      phase_1: "Classify agent identity types, credential types, and privilege levels"
+      phase_2: "Map trust delegation chains — when Agent A delegates to Agent B, what privileges transfer?"
+      phase_3: "Deploy privilege escalation detection heuristics"
+      phase_7: "Formalize privilege policies: agents receive task-scoped, time-bound permissions"
+      phase_8: "Structurally enforce agent identity separation — each agent has its own credential scope"
+      phase_9: "Formally verify that no execution trace allows an agent to exceed its initialized privilege set"
+
+  - owasp_id: "ASI04"
+    name: "Uncontrolled Agentic Actions"
+    esf_phases:
+      phase_3: "Deploy circuit breakers: action rate limits, scope boundaries, human escalation triggers"
+      phase_7: "Formalize action approval policies — which actions require human confirmation?"
+      phase_8: "Structurally enforce action boundaries at the orchestration layer"
+
+  - owasp_id: "ASI05"
+    name: "Improper Multi-Agent Orchestration"
+    esf_phases:
+      phase_2: "Map inter-agent communication channels and trust relationships"
+      phase_3: "Deploy cross-agent trust scoring and anomaly detection on inter-agent messages"
+      phase_6: "Root cause: agents inherit trust from their orchestrator without independent verification"
+      phase_8: "Structurally isolate agents — no agent can directly modify another agent's state or goals"
+
+  - owasp_id: "ASI06"
+    name: "Harmful Content Generation"
+    esf_phases:
+      phase_3: "Deploy output filtering heuristics for harmful, biased, or policy-violating content"
+      phase_5: "Model baseline output distributions; detect anomalous content patterns"
+      phase_7: "Formalize content policies as deterministic output filters"
+
+  - owasp_id: "ASI07"
+    name: "Sensitive Data Exfiltration"
+    esf_phases:
+      phase_2: "Map all data egress paths from the agent system — where can data leave?"
+      phase_3: "Deploy data loss prevention heuristics on all egress channels"
+      phase_8: "Structurally constrain data egress to whitelisted channels with provenance tracking"
+
+  - owasp_id: "ASI08"
+    name: "Cascading Failures"
+    esf_phases:
+      phase_2: "Map dependency chains between agents, tools, and services — where do failures propagate?"
+      phase_3: "Deploy circuit breakers at each dependency boundary"
+      phase_7: "Formalize failure isolation policies as state machine transitions"
+      phase_9: "Formally verify bounded recovery — the system always returns to a safe state within bounded time"
+
+  - owasp_id: "ASI09"
+    name: "Supply Chain & Environment Manipulation"
+    esf_phases:
+      phase_1: "Classify agentic supply chain components: MCP servers, plugins, tool providers, model providers"
+      phase_2: "Map trust boundaries between the agent and each external component"
+      phase_3: "Deploy integrity verification on all external components"
+      phase_8: "Structurally sandbox external component execution"
+
+  - owasp_id: "ASI10"
+    name: "Rogue Agents"
+    esf_phases:
+      phase_2: "Map the self-improvement boundary — what can agents modify about themselves or other agents?"
+      phase_3: "Deploy behavioral drift detection: compare agent actions against declared purpose"
+      phase_5: "Model baseline agent behavior; detect divergence from expected patterns"
+      phase_8: "Structurally prevent agents from modifying their own constraints or other agents' goals"
+      phase_10: "The self-improvement boundary is the most critical constraint: the mechanism that evolves the system must operate in a different trust domain than the system itself"

@@ -1,0 +1,144 @@
+# ESF Assessment Scorecard
+# Version: 0.1.0
+# Usage: Score each phase 0-4 for your system. See spec Section 5 for detailed criteria.
+
+scoring_scale:
+  0: { level: "Absent", definition: "Phase not implemented or addressed in any form" }
+  1: { level: "Ad-hoc", definition: "Some elements exist but are informal, undocumented, or inconsistent" }
+  2: { level: "Defined", definition: "Formally defined with documented processes, not yet systematically measured" }
+  3: { level: "Measured", definition: "Implemented, instrumented, and effectiveness quantitatively tracked" }
+  4: { level: "Optimizing", definition: "Fully operational, continuously measured, and actively improving through feedback loops" }
+
+phases:
+
+  - phase: 1
+    verb: "Name"
+    domain: "Taxonomy"
+    question: "What exists in this domain?"
+    criteria:
+      0: "No structured classification of entities, threats, or actions exists"
+      1: "Informal categories exist in documentation or team knowledge but are not systematically applied"
+      2: "A formal taxonomy is documented with defined categories, hierarchy levels, and classification rules"
+      3: "The taxonomy is machine-readable, consistently applied across the system, and coverage is measured"
+      4: "The taxonomy is dynamically updated based on new observations, with automated gap detection and version tracking"
+
+  - phase: 2
+    verb: "Relate"
+    domain: "Ontology"
+    question: "How do named things connect?"
+    criteria:
+      0: "No formal relationship model exists between entities"
+      1: "Some relationships are informally documented (e.g., architecture diagrams, threat models)"
+      2: "A formal ontology exists with typed relationships, trust boundaries, and attack chain models"
+      3: "The ontology is machine-readable, used for automated reasoning, and coverage is measured against the real system"
+      4: "The ontology is dynamically updated, supports inference, and discrepancies between model and reality are automatically detected"
+
+  - phase: 3
+    verb: "Guess"
+    domain: "Heuristics"
+    question: "What rules of thumb catch problems?"
+    criteria:
+      0: "No heuristic detection or response rules are deployed"
+      1: "Some heuristics exist but are undocumented and inconsistently applied"
+      2: "Heuristics are documented, paired with response actions, and deployed as an operational layer"
+      3: "Heuristics are individually instrumented with performance metrics and coverage is tracked against the ontology"
+      4: "Heuristics are continuously refined based on measurement data, with automated threshold tuning and gap identification"
+
+  - phase: 4
+    verb: "Measure"
+    domain: "Empirical Validation"
+    question: "Do our guesses actually work?"
+    criteria:
+      0: "No measurement of security control effectiveness"
+      1: "Some ad-hoc measurement exists (e.g., manual review of alerts)"
+      2: "Systematic measurement is in place with defined metrics and regular reporting"
+      3: "Per-control metrics are tracked over time, adversarial testing is regular, and failure data feeds back into taxonomy"
+      4: "Measurement is continuous, automated, and drives real-time adjustments to upstream phases"
+
+  - phase: 5
+    verb: "Model"
+    domain: "Statistical / Information-Theoretic Modeling"
+    question: "What patterns emerge from the data?"
+    criteria:
+      0: "No statistical modeling of behavior or threats"
+      1: "Basic statistical analysis exists (e.g., manual log review, simple alerting thresholds)"
+      2: "Behavioral baselines are established and anomaly detection is deployed"
+      3: "Models are trained on labeled data, with calibrated confidence scores and information-theoretic monitoring"
+      4: "Models are continuously retrained, cross-validated against heuristics, and novel pattern discovery feeds back into taxonomy"
+
+  - phase: 6
+    verb: "Explain"
+    domain: "Causal Inference"
+    question: "Why do these vulnerabilities exist?"
+    criteria:
+      0: "No root cause analysis is performed"
+      1: "Root cause analysis is ad-hoc and per-incident"
+      2: "Systematic causal analysis is performed with documented invariants"
+      3: "Causal models are validated through counterfactual testing and invariants are prioritized by impact"
+      4: "Cross-campaign causal analysis identifies systemic patterns, and causal models drive architectural decisions"
+
+  - phase: 7
+    verb: "Formalize"
+    domain: "Formal Logic / Policy Systems"
+    question: "What is always true, with no exceptions?"
+    criteria:
+      0: "No formal, deterministic security rules exist"
+      1: "Some rules are formalized but enforcement is incomplete or inconsistent"
+      2: "A policy engine with deterministic rules is deployed, with formal remediation state transitions"
+      3: "Coverage is measured (formal rules vs. heuristics), and rules are derived from validated causal models"
+      4: "Formal rules are dynamically updated through the evolution cycle, with automated coverage tracking and promotion"
+
+  - phase: 8
+    verb: "Constrain"
+    domain: "Structural Enforcement"
+    question: "What can be made structurally impossible?"
+    criteria:
+      0: "No structural security constraints in the architecture"
+      1: "Some architectural constraints exist but are not systematically designed for security"
+      2: "Critical trust boundaries are structurally enforced, with documented architectural invariants"
+      3: "Structural constraints are verified through adversarial testing and cover all identified trust boundaries"
+      4: "Architecture is designed constraint-first, with structural enforcement covering all high-consequence properties and the system's own behavior"
+
+  - phase: 9
+    verb: "Prove"
+    domain: "Formal Verification"
+    question: "Can we mathematically guarantee it?"
+    criteria:
+      0: "No formal verification of any system properties"
+      1: "Informal reasoning about system correctness (e.g., design reviews, argument sketches)"
+      2: "Critical properties have formal specifications and verification has been attempted"
+      3: "Critical properties are formally verified, with proofs maintained alongside codebase and re-verified on changes"
+      4: "Formal verification is integrated into development lifecycle, with automated re-verification and specification evolution"
+
+  - phase: 10
+    verb: "Evolve"
+    domain: "Meta-heuristics / Adaptive Systems"
+    question: "How does the system get harder over time?"
+    criteria:
+      0: "No systematic improvement process exists"
+      1: "Improvements happen reactively (after incidents)"
+      2: "A defined improvement process exists with feedback loops from measurement to earlier phases"
+      3: "Self-improvement produces measurable gains, operates within a defined trust boundary, and is subject to human review"
+      4: "Cross-campaign analysis drives systemic improvements, maturation rate is tracked, and the evolution process itself is measured"
+
+# Assessment Template
+# Copy and fill in for your system:
+#
+# system_name: "Your System"
+# assessed_by: "Your Name"
+# date: "YYYY-MM-DD"
+# scores:
+#   phase_1_name: 0
+#   phase_2_relate: 0
+#   phase_3_guess: 0
+#   phase_4_measure: 0
+#   phase_5_model: 0
+#   phase_6_explain: 0
+#   phase_7_formalize: 0
+#   phase_8_constrain: 0
+#   phase_9_prove: 0
+#   phase_10_evolve: 0
+# notes:
+#   phase_1_name: ""
+#   phase_2_relate: ""
+#   ...

@@ -1,0 +1,89 @@
+# ESF ↔ OWASP LLM Top 10 (2025) Mapping
+# For each OWASP risk, which ESF phases are most relevant and what maturity looks like.
+
+framework: "OWASP LLM Top 10 (2025)"
+esf_version: "0.1.0"
+
+mappings:
+
+  - owasp_id: "LLM01"
+    name: "Prompt Injection"
+    esf_phases:
+      phase_1: "Classify injection subtypes: direct override, context manipulation, delimiter exploitation, encoding bypass, indirect via retrieval"
+      phase_2: "Map injection paths through system components — which interfaces accept untrusted input that reaches the model's instruction channel?"
+      phase_3: "Deploy input validation heuristics, pattern matching against known injection markers, encoding detection"
+      phase_4: "Measure heuristic performance: bypass rate, false positive rate on legitimate complex inputs"
+      phase_5: "Build behavioral baselines for normal input patterns; detect anomalous instruction-like content statistically"
+      phase_6: "Root cause: instruction/data channel conflation. Architectural invariant: untrusted input must be structurally separated from system instructions"
+      phase_7: "Formalize input validation as deterministic policy rules with binary accept/reject"
+      phase_8: "Structurally separate instruction and data channels at the architecture level"
+      phase_9: "Formally verify that no code path allows untrusted input to reach the instruction channel without sanitization"
+    tachyonic_heuristics_ids: "PI-001 through PI-020, MT-001 through MT-008"
+
+  - owasp_id: "LLM02"
+    name: "Sensitive Information Disclosure"
+    esf_phases:
+      phase_1: "Classify data sensitivity levels and disclosure vectors"
+      phase_2: "Map data flow from training data, RAG sources, and context through to model output"
+      phase_3: "Deploy output scanning heuristics for PII, credentials, system prompt fragments"
+      phase_6: "Root cause: model lacks awareness of data classification; no structural boundary between sensitive and non-sensitive content in context"
+      phase_8: "Structurally enforce data classification at the retrieval and output layers"
+    tachyonic_heuristics_ids: "SID-001 through SID-010"
+
+  - owasp_id: "LLM03"
+    name: "Supply Chain"
+    esf_phases:
+      phase_1: "Classify supply chain components: training data sources, model weights, fine-tuning datasets, plugins, tools, dependencies"
+      phase_2: "Map dependency chains and trust boundaries between supply chain components"
+      phase_3: "Deploy integrity verification heuristics for model weights, plugin checksums, dependency auditing"
+      phase_8: "Structurally enforce supply chain integrity through cryptographic verification and sandboxed execution"
+    tachyonic_heuristics_ids: "SC-001 through SC-008"
+
+  - owasp_id: "LLM05"
+    name: "Improper Output Handling"
+    esf_phases:
+      phase_1: "Classify output consumption contexts: HTML rendering, code execution, API calls, database queries"
+      phase_2: "Map output flow from model to downstream consumers; identify where model output is interpreted as executable"
+      phase_3: "Deploy output sanitization heuristics: XSS filtering, SQL injection prevention, command injection blocking"
+      phase_7: "Formalize output encoding rules as deterministic transforms based on consumption context"
+      phase_8: "Structurally prevent model output from being executed without context-appropriate encoding"
+    tachyonic_heuristics_ids: "IOH-001 through IOH-008"
+
+  - owasp_id: "LLM06"
+    name: "Excessive Agency"
+    esf_phases:
+      phase_1: "Classify agent capabilities, tool access, and permission levels"
+      phase_2: "Map agent → capability → tool → asset relationships; identify trust boundaries at each interface"
+      phase_3: "Deploy scope guards, budget constraints, and action rate limits"
+      phase_6: "Root cause: capability scope is policy-enforced, not structurally enforced. Invariant: agents cannot invoke capabilities not granted at initialization"
+      phase_8: "Structurally enforce capability-based security with unforgeable tokens"
+      phase_9: "Formally verify that no execution trace allows capability escalation"
+    tachyonic_heuristics_ids: "EA-001 through EA-012"
+
+  - owasp_id: "LLM07"
+    name: "System Prompt Leakage"
+    esf_phases:
+      phase_1: "Classify leakage vectors: direct extraction, reflection attacks, completion prompts, behavioral inference"
+      phase_3: "Deploy output scanning for system prompt fragment detection"
+      phase_6: "Root cause: system prompt is stored in the same context window as user-accessible content"
+      phase_8: "Architecturally separate system prompt from user-accessible model state"
+    tachyonic_heuristics_ids: "SPL-001 through SPL-012"
+
+  - owasp_id: "LLM08"
+    name: "Vector/Embedding Attacks"
+    esf_phases:
+      phase_1: "Classify RAG-specific attack vectors: embedding injection, retrieval poisoning, context overflow"
+      phase_2: "Map the retrieval pipeline: document ingestion → embedding → storage → retrieval → context insertion"
+      phase_3: "Deploy injection scoring on retrieved documents before context insertion"
+      phase_5: "Model baseline embedding distributions; detect anomalous documents statistically"
+      phase_8: "Structurally enforce provenance tagging on all retrieved content"
+    tachyonic_heuristics_ids: "VE-001 through VE-008"
+
+  - owasp_id: "LLM10"
+    name: "Unbounded Consumption"
+    esf_phases:
+      phase_3: "Deploy token budget limits, action rate limits, cost ceiling heuristics"
+      phase_7: "Formalize resource bounds as deterministic constraints"
+      phase_8: "Structurally enforce resource bounds at the orchestration layer (not the application layer)"
+      phase_9: "Formally verify that no input can cause resource consumption beyond configured bounds"
+    tachyonic_heuristics_ids: "UC-001 through UC-002"

@@ -1,0 +1,84 @@
+# ESF Pipeline Mapping Template
+# Use this template to map your system's components to ESF phases.
+# See examples/tachyonic-pipeline-mapping.md for a completed example.
+
+system_name: ""
+assessed_by: ""
+date: ""
+esf_version: "0.1.0"
+
+# List your system's pipeline stages or components.
+# For each, identify which ESF phase(s) it implements.
+
+stages:
+
+  - stage_name: ""
+    description: ""
+    esf_phases: []          # List of phase numbers (1-10)
+    esf_role: ""            # What is this stage doing epistemologically?
+    inputs: []
+    outputs: []
+    notes: ""
+
+# After mapping stages, identify coverage gaps.
+
+coverage:
+
+  phase_1_name:
+    covered_by: []          # Which stages implement this phase?
+    coverage_level: ""      # full | partial | absent
+    notes: ""
+
+  phase_2_relate:
+    covered_by: []
+    coverage_level: ""
+    notes: ""
+
+  phase_3_guess:
+    covered_by: []
+    coverage_level: ""
+    notes: ""
+
+  phase_4_measure:
+    covered_by: []
+    coverage_level: ""
+    notes: ""
+
+  phase_5_model:
+    covered_by: []
+    coverage_level: ""
+    notes: ""
+
+  phase_6_explain:
+    covered_by: []
+    coverage_level: ""
+    notes: ""
+
+  phase_7_formalize:
+    covered_by: []
+    coverage_level: ""
+    notes: ""
+
+  phase_8_constrain:
+    covered_by: []
+    coverage_level: ""
+    notes: ""
+
+  phase_9_prove:
+    covered_by: []
+    coverage_level: ""
+    notes: ""
+
+  phase_10_evolve:
+    covered_by: []
+    coverage_level: ""
+    notes: ""
+
+# Identify the highest-priority gaps.
+
+priority_gaps:
+  - phase: ""
+    current_score: 0
+    target_score: 0
+    blocking_factors: ""
+    next_action: ""
