@@ -17,7 +17,7 @@ EVIDENCE → DOWNSTREAM_SPAWN → UPLOAD → NOTIFY → SELF_IMPROVE → DONE
 |---|---|---|
 | **INIT** | Phase 1 (Name) | Target classification and hypothesis scoping — applying the taxonomy to a specific target |
 | **RECON** | Phase 1→2 (Name → Relate) | Source review builds a target-specific ontology — entities, components, relationships, trust boundaries |
-| **SCAN** | Phase 3 (Guess) | Broad pattern-matching heuristics across the 122-attack taxonomy |
+| **SCAN** | Phase 3 (Guess) | Broad pattern-matching heuristics across the attack taxonomy |
 | **HEUR_TRIAGE** | Phase 4 + 7 (Measure + Formalize) | 14 deterministic heuristics performing empirically validated FP suppression |
 | **ANALYST_TRIAGE** | Phase 5→6 (Model → Explain) | Probabilistic classification (TP/FP/plausible) with causal reasoning |
 | **EVIDENCE** | Phase 6→7 (Explain → Formalize) | Analyst understanding formalized into structured evidence packages |
@@ -37,7 +37,7 @@ Score:   3-4  2    3    3    2-3  2    3    2    0-1  3
 
 | Phase | Score | Rationale |
 |---|---|---|
-| 1. Name | 3-4 | 122-attack taxonomy, machine-readable YAML, extensible schema, multi-framework mapping |
+| 1. Name | 3-4 | 144-attack taxonomy, machine-readable YAML, extensible schema, multi-framework mapping |
 | 2. Relate | 2 | OWASP/ATLAS mappings provide typed relationships; attack chain analysis exists; not yet a machine-readable graph with inference |
 | 3. Guess | 3 | 14 operational heuristics, remediation guidance with code examples, documented and instrumented |
 | 4. Measure | 3 | Per-heuristic metrics via analyst labels, self-improve feedback loop, adversarial hypothesis testing |

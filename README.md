@@ -141,7 +141,7 @@ High-value contributions:
 
 ## Professional Assessment
 
-Want your AI system assessed against the full ESF? [Tachyonic](https://tachyonicai.com) runs 48-hour security assessments that test against all 122 attack vectors with full reporting, resistance scoring, and ESF maturity assessment.
+Want your AI system assessed against the full ESF? [Tachyonic](https://tachyonicai.com) runs 48-hour security assessments that test against all 144 attack vectors with full reporting, resistance scoring, and ESF maturity assessment.
 
 [Book a scoping call →](https://cal.com/tachyonicai/ai-security-scoping)
 

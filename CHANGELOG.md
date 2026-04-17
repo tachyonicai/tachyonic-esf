@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Initial draft of the ten-phase framework specification
 - Foundational principles: Progressive Determinism, Funnel Principle, Appropriate Hardening, Cyclical Maturation, Self-Application, Epistemological Humility
 - Full phase definitions (1-10) with core concepts, principles, anti-patterns, and decision criteria
-- Worked examples grounded in the Tachyonic 122-attack taxonomy and agentic security pipeline
+- Worked examples grounded in the Tachyonic attack taxonomy and agentic security pipeline
 - Bridging concepts section mapping cross-phase concepts
 - Maturity assessment rubric (0-4 scoring per phase)
 - Maturity profiles (Reactive, Operational, Hardened, Research-grade, Mature)

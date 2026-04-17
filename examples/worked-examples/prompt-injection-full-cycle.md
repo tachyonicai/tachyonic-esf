@@ -64,7 +64,7 @@ Identify the root cause:
 
 **Root cause:** The model processes instructions and data through the same channel. There is no structural distinction between "trusted system prompt" and "untrusted user input" at the token level.
 
-**Architectural invariant:** If untrusted input were structurally separated from system instructions before processing, 20 PI attacks + 8 MT attacks + 8 VE attacks (36 of 122 total, 29%) would be eliminated by design.
+**Architectural invariant:** If untrusted input were structurally separated from system instructions before processing, 20 PI attacks + 8 MT attacks + 8 VE attacks (36 of 144 total, 25%) would be eliminated by design.
 
 **Counterfactual validation:** If instruction/data separation existed, PI-001 (Direct Instruction Override) becomes impossible — "ignore previous instructions" is tagged as data and never reaches the instruction channel.
 

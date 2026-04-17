@@ -148,32 +148,34 @@ No system achieves Phase 9 for all properties. The frontier of unknown threats n
 - Can two people independently classify the same entity and arrive at the same category?
 - Does the taxonomy distinguish entities that require different security treatment?
 
-**Worked Example: The Tachyonic 122-Attack Taxonomy**
+**Worked Example: The Tachyonic Attack Taxonomy**
 
-The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) taxonomy is a reference implementation of Phase 1. It systematically catalogues 122 distinct AI/LLM attack techniques across 11 categories, each mapped to industry frameworks (OWASP LLM Top 10, MITRE ATLAS).
+The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) taxonomy is a reference implementation of Phase 1. It systematically catalogues over 140 distinct AI/LLM attack techniques across 13 categories, each mapped to industry frameworks (OWASP LLM Top 10, MITRE ATLAS).
 
 *Taxonomy structure:*
 
-| Category | ID Prefix | Count | OWASP LLM Top 10 |
+| Category | ID Prefix | Count | Framework |
 |---|---|---|---|
 | Prompt Injection | PI | 20 | LLM01 |
 | System Prompt Leakage | SPL | 12 | LLM07 |
 | Jailbreaks | JB | 22 | LLM01 |
 | Vision/Multimodal | VI | 12 | LLM01 |
-| Excessive Agency / Tool Abuse | EA | 12 | LLM06 |
+| Excessive Agency / Tool Abuse | EA | 16 | LLM06 |
 | Multi-Turn Manipulation | MT | 8 | LLM01 |
-| Sensitive Information Disclosure | SID | 10 | LLM06 |
-| Supply Chain | SC | 8 | LLM03 |
-| Vector/Embedding Attacks | VE | 8 | LLM08 |
+| Sensitive Information Disclosure | SID | 10 | LLM02 |
+| Supply Chain | SC | 12 | LLM03 |
+| Vector/Embedding Attacks | VE | 10 | LLM08 |
 | Improper Output Handling | IOH | 8 | LLM05 |
 | Unbounded Consumption | UC | 2 | LLM10 |
-| **Total** | | **122** | |
+| Misinformation | MIS | 6 | LLM09 |
+| Memory/Context Poisoning | CTX | 6 | ASI06 |
+| **Total** | | **144** | |
 
 *Each attack entry includes:*
 
 - **ID** — Unique identifier (e.g., PI-001, JB-015, MT-003) providing stable reference across the system
 - **Name** — Human-readable attack name
-- **Category** — Which of the 11 categories it belongs to
+- **Category** — Which of the 13 categories it belongs to
 - **Description** — What the attack does and how it works conceptually
 - **Severity** — Critical, high, medium, or low
 - **OWASP Mapping** — Which OWASP LLM Top 10 item it maps to
@@ -181,7 +183,7 @@ The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) 
 
 *Why this is strong Phase 1 work:*
 
-- **Exhaustive within scope** — 122 attacks cover the full documented AI attack surface, not just the well-known handful
+- **Exhaustive within scope** — 144 attacks cover the full documented AI attack surface, not just the well-known handful
 - **Faceted classification** — attacks are classified by category, severity, and framework mapping (three independent dimensions)
 - **Stable identifiers** — the ID scheme (PI-001, JB-015) provides unambiguous reference across teams, tools, and documentation
 - **Extensible schema** — YAML schema in `schema/attack_schema.yaml` allows community contribution of new attack definitions following the same format
@@ -189,7 +191,7 @@ The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) 
 
 *Phase 1 maturity assessment for tachyonic-heuristics:* **Score 3-4** — The taxonomy is machine-readable, consistently structured, mapped to multiple industry frameworks, and extensible. It reaches Score 4 when dynamic update mechanisms (automated gap detection from Phase 10 feedback) are operational.
 
-*Key insight from the taxonomy:* Most AI security discussions focus on a handful of well-known attacks. In reality, the attack surface spans 11 distinct categories with 122 techniques. A system that blocks a naive instruction override (PI-001) might still fall to an encoding bypass (PI-series), a multi-turn escalation (MT-series), or an indirect injection through retrieved content (VE-series). The taxonomy makes this breadth visible and actionable.
+*Key insight from the taxonomy:* Most AI security discussions focus on a handful of well-known attacks. In reality, the attack surface spans 13 distinct categories with over 140 techniques. A system that blocks a naive instruction override (PI-001) might still fall to an encoding bypass (PI-series), a multi-turn escalation (MT-series), or an indirect injection through retrieved content (VE-series). The taxonomy makes this breadth visible and actionable.
 
 *Repository:* [github.com/tachyonicai/tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) (Apache 2.0)
 
@@ -247,7 +249,7 @@ The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) 
 - Are relationship types explicitly typed with properties (transitivity, symmetry, etc.)?
 - Is the ontology machine-readable, or does it exist only in human documentation?
 
-**Worked Example: Ontological Relationships in the 122-Attack Taxonomy**
+**Worked Example: Ontological Relationships in the Attack Taxonomy**
 
 The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) taxonomy provides the naming (Phase 1). The ontological layer emerges from the relationships *between* those named entities — relationships that the repository's mapping files begin to capture.
 
@@ -333,7 +335,7 @@ The Excessive Agency (EA) category implicitly defines the critical trust boundar
 - Are heuristics independent enough that compromising one doesn't compromise others?
 - Is the heuristic layer deployable and operational, even if imperfect?
 
-**Worked Example: Deriving Heuristics from the 122-Attack Taxonomy**
+**Worked Example: Deriving Heuristics from the Attack Taxonomy**
 
 The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) repository contains `remediation/by_owasp.yaml` with defensive guidance per OWASP category, and `remediation/code_examples/` with input validation and output sanitization patterns. These are Phase 3 artifacts — heuristic detection and response rules derived from the taxonomic and ontological understanding of Phases 1-2.
 
@@ -360,7 +362,7 @@ The `remediation/code_examples/input_validation.py` and `output_sanitization.py`
 
 In the agentic security pipeline, the HEUR_TRIAGE stage runs a Rust engine with 14 formalized heuristics that suppress false positives. These 14 heuristics represent Phase 3 rules that have been empirically validated (Phase 4) and promoted to formalized status (Phase 7) — they are deterministic, not probabilistic. They operate as a fast, cheap filter before the more expensive ANALYST_TRIAGE (Claude agent, Phase 5-6).
 
-This demonstrates the funnel principle in action: 122 attack types in the taxonomy → scanned broadly by the scanner → filtered deterministically by 14 hardened heuristics → analyzed causally by the AI analyst for the remainder.
+This demonstrates the funnel principle in action: 144 attack types in the taxonomy → scanned broadly by the scanner → filtered deterministically by 14 hardened heuristics → analyzed causally by the AI analyst for the remainder.
 
 *Phase 3 maturity assessment for tachyonic-heuristics:* **Score 3** — Heuristics are documented, paired with response actions, deployed operationally, and the 14-heuristic engine is instrumented with FP suppression metrics. Score 4 requires automated heuristic generation from new taxonomy entries and continuous threshold optimization from Phase 10 feedback.
 
@@ -433,7 +435,7 @@ The agentic security pipeline's HEUR_TRIAGE → ANALYST_TRIAGE → SELF_IMPROVE 
 | True suppression rate | Fraction of FPs correctly suppressed by the heuristic | ANALYST_TRIAGE labels vs. HEUR_TRIAGE decisions |
 | False suppression rate | Fraction of TPs incorrectly suppressed | ANALYST_TRIAGE labels for findings that never reached analyst |
 | Pass-through FP rate | FPs that survived heuristic filtering and reached the analyst | ANALYST_TRIAGE FP labels on passed findings |
-| Heuristic coverage | Which taxonomy categories (of 122) does this heuristic apply to? | Mapping heuristic scope to taxonomy IDs |
+| Heuristic coverage | Which taxonomy categories (of 144) does this heuristic apply to? | Mapping heuristic scope to taxonomy IDs |
 
 *The feedback loop:*
 
@@ -595,14 +597,14 @@ Also enables: 8 MT-series attacks (multi-turn manipulation exploits the
 Also enables: 8 VE-series attacks (RAG poisoning injects untrusted
               content into the instruction channel via retrieval)
     ↓
-Total: 36 of 122 attacks (29%) trace to this single root cause
+Total: 36 of 144 attacks (25%) trace to this single root cause
 ```
 
 *Architectural invariant derived:*
 
 **"Untrusted input must be structurally separated from system instructions before processing."**
 
-If this invariant held — if the architecture fundamentally distinguished instruction tokens from data tokens — then 36 of 122 attack techniques would be eliminated by design, not by detection.
+If this invariant held — if the architecture fundamentally distinguished instruction tokens from data tokens — then 36 of 144 attack techniques would be eliminated by design, not by detection.
 
 *Counterfactual validation:*
 
@@ -733,7 +735,7 @@ The human gate on disclosure (EVIDENCED → DISCLOSED) is a formal constraint �
 
 *Coverage analysis:*
 
-Of the 122 attacks in the taxonomy, the 14 heuristics in HEUR_TRIAGE provide formal coverage for a measurable subset. Coverage analysis answers: which taxonomy IDs are formally covered (Phase 7), which are heuristically covered (Phase 3), and which rely on the scanner's broad detection (Phase 3) plus analyst judgment (Phase 5-6)?
+Of the 144 attacks in the taxonomy, the 14 heuristics in HEUR_TRIAGE provide formal coverage for a measurable subset. Coverage analysis answers: which taxonomy IDs are formally covered (Phase 7), which are heuristically covered (Phase 3), and which rely on the scanner's broad detection (Phase 3) plus analyst judgment (Phase 5-6)?
 
 ```
 COVERAGE MAP:
@@ -1417,7 +1419,7 @@ Complete alphabetical glossary of all technical terms used in the framework.
 
 The ESF is grounded in the work of [Tachyonic](https://tachyonicai.com), which provides two concrete artifacts that serve as the reference implementation:
 
-1. **[tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics)** — An open-source taxonomy of 122 AI/LLM attack vectors, mapped to the OWASP LLM Top 10 and MITRE ATLAS. This implements Phases 1-3 of the ESF (taxonomy, partial ontology, remediation heuristics). Apache 2.0 licensed.
+1. **[tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics)** — An open-source taxonomy of AI/LLM attack vectors, mapped to the OWASP LLM Top 10 and MITRE ATLAS. This implements Phases 1-3 of the ESF (taxonomy, partial ontology, remediation heuristics). Apache 2.0 licensed.
 
 2. **The Tachyonic Agentic Security Pipeline** — An 11-stage pipeline (INIT → RECON → SCAN → HEUR_TRIAGE → ANALYST_TRIAGE → EVIDENCE → DOWNSTREAM_SPAWN → UPLOAD → NOTIFY → SELF_IMPROVE → DONE) that implements Phases 3-10 operationally. The pipeline accepts a target and hypothesis set, runs the full research methodology without human intervention, and self-improves with each campaign cycle.
 
@@ -1427,7 +1429,7 @@ The tachyonic-heuristics repository structure maps directly to ESF phases:
 
 | Repository Path | ESF Phase | Role |
 |---|---|---|
-| `taxonomy/attack_catalog.yaml` | Phase 1: Name | The 122-attack taxonomy — all entities named, classified, and severity-rated |
+| `taxonomy/attack_catalog.yaml` | Phase 1: Name | The attack taxonomy — all entities named, classified, and severity-rated |
 | `taxonomy/owasp_mapping.yaml` | Phase 2: Relate | Attack → OWASP LLM Top 10 relationships |
 | `taxonomy/atlas_mapping.yaml` | Phase 2: Relate | Attack → MITRE ATLAS technique relationships |
 | `schema/attack_schema.yaml` | Phase 2: Relate | The ontological schema — what entity types and properties are permitted |
@@ -1444,7 +1446,7 @@ The agentic security pipeline maps each operational stage to one or more ESF pha
 |---|---|---|
 | **INIT** | Phase 1 (Name) | Target classification and hypothesis set scoping — applying the taxonomy to a specific target |
 | **RECON** | Phase 1→2 (Name → Relate) | Claude source review builds a target-specific ontology — entities, components, relationships, trust boundaries |
-| **SCAN** | Phase 3 (Guess) | Broad pattern-matching heuristics cast a wide net across the 122-attack taxonomy |
+| **SCAN** | Phase 3 (Guess) | Broad pattern-matching heuristics cast a wide net across the attack taxonomy |
 | **HEUR_TRIAGE** | Phase 4 + 7 (Measure + Formalize) | 14 deterministic heuristics in Rust engine — formalized rules performing empirically validated FP suppression |
 | **ANALYST_TRIAGE** | Phase 5→6 (Model → Explain) | Claude agent performs probabilistic classification (TP/FP/plausible) with causal reasoning about why findings matter |
 | **EVIDENCE** | Phase 6→7 (Explain → Formalize) | Analyst understanding is formalized into structured, template-based evidence packages |
@@ -1466,7 +1468,7 @@ Score:   3-4  2    3    3    2-3  2    3    2    0-1  3
 
 | Phase | Score | Rationale |
 |---|---|---|
-| 1. Name | 3-4 | 122-attack taxonomy, machine-readable YAML, extensible schema, multi-framework mapping |
+| 1. Name | 3-4 | attack taxonomy, machine-readable YAML, extensible schema, multi-framework mapping |
 | 2. Relate | 2 | OWASP/ATLAS mappings provide typed relationships; attack chain analysis exists in blog; not yet a machine-readable graph with inference |
 | 3. Guess | 3 | 14 operational heuristics, remediation guidance with code examples, documented and instrumented |
 | 4. Measure | 3 | Per-heuristic metrics via ANALYST_TRIAGE labels, SELF_IMPROVE feedback loop, adversarial hypothesis testing |
