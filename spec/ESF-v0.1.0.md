@@ -160,8 +160,8 @@ The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) 
 | System Prompt Leakage | SPL | 12 | LLM07 |
 | Jailbreaks | JB | 22 | LLM01 |
 | Vision/Multimodal | VI | 12 | LLM01 |
-| Excessive Agency / Tool Abuse | EA | 16 | LLM06 |
-| Multi-Turn Manipulation | MT | 8 | LLM01 |
+| Excessive Agency / Tool Abuse | EA | 20 | LLM06 |
+| Multi-Turn Manipulation | MT | 10 | LLM01 |
 | Sensitive Information Disclosure | SID | 10 | LLM02 |
 | Supply Chain | SC | 12 | LLM03 |
 | Vector/Embedding Attacks | VE | 10 | LLM08 |
@@ -169,13 +169,16 @@ The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) 
 | Unbounded Consumption | UC | 2 | LLM10 |
 | Misinformation | MIS | 6 | LLM09 |
 | Memory/Context Poisoning | CTX | 6 | ASI06 |
-| **Total** | | **144** | |
+| Unexpected Code Execution | UCE | 6 | ASI05 |
+| Inter-Agent Communication | IAC | 6 | ASI07 |
+| Human Trust Exploitation | HTE | 6 | ASI09 |
+| **Total** | | **168** | |
 
 *Each attack entry includes:*
 
 - **ID** — Unique identifier (e.g., PI-001, JB-015, MT-003) providing stable reference across the system
 - **Name** — Human-readable attack name
-- **Category** — Which of the 13 categories it belongs to
+- **Category** — Which of the 16 categories it belongs to
 - **Description** — What the attack does and how it works conceptually
 - **Severity** — Critical, high, medium, or low
 - **OWASP Mapping** — Which OWASP LLM Top 10 item it maps to
@@ -183,7 +186,7 @@ The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) 
 
 *Why this is strong Phase 1 work:*
 
-- **Exhaustive within scope** — 144 attacks cover the full documented AI attack surface, not just the well-known handful
+- **Exhaustive within scope** — 168 attacks cover the full documented AI attack surface, not just the well-known handful
 - **Faceted classification** — attacks are classified by category, severity, and framework mapping (three independent dimensions)
 - **Stable identifiers** — the ID scheme (PI-001, JB-015) provides unambiguous reference across teams, tools, and documentation
 - **Extensible schema** — YAML schema in `schema/attack_schema.yaml` allows community contribution of new attack definitions following the same format
@@ -191,7 +194,7 @@ The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) 
 
 *Phase 1 maturity assessment for tachyonic-heuristics:* **Score 3-4** — The taxonomy is machine-readable, consistently structured, mapped to multiple industry frameworks, and extensible. It reaches Score 4 when dynamic update mechanisms (automated gap detection from Phase 10 feedback) are operational.
 
-*Key insight from the taxonomy:* Most AI security discussions focus on a handful of well-known attacks. In reality, the attack surface spans 13 distinct categories with over 140 techniques. A system that blocks a naive instruction override (PI-001) might still fall to an encoding bypass (PI-series), a multi-turn escalation (MT-series), or an indirect injection through retrieved content (VE-series). The taxonomy makes this breadth visible and actionable.
+*Key insight from the taxonomy:* Most AI security discussions focus on a handful of well-known attacks. In reality, the attack surface spans 16 distinct categories with over 160 techniques. A system that blocks a naive instruction override (PI-001) might still fall to an encoding bypass (PI-series), a multi-turn escalation (MT-series), or an indirect injection through retrieved content (VE-series). The taxonomy makes this breadth visible and actionable.
 
 *Repository:* [github.com/tachyonicai/tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) (Apache 2.0)
 
@@ -362,7 +365,7 @@ The `remediation/code_examples/input_validation.py` and `output_sanitization.py`
 
 In the agentic security pipeline, the HEUR_TRIAGE stage runs a Rust engine with 14 formalized heuristics that suppress false positives. These 14 heuristics represent Phase 3 rules that have been empirically validated (Phase 4) and promoted to formalized status (Phase 7) — they are deterministic, not probabilistic. They operate as a fast, cheap filter before the more expensive ANALYST_TRIAGE (Claude agent, Phase 5-6).
 
-This demonstrates the funnel principle in action: 144 attack types in the taxonomy → scanned broadly by the scanner → filtered deterministically by 14 hardened heuristics → analyzed causally by the AI analyst for the remainder.
+This demonstrates the funnel principle in action: 168 attack types in the taxonomy → scanned broadly by the scanner → filtered deterministically by 14 hardened heuristics → analyzed causally by the AI analyst for the remainder.
 
 *Phase 3 maturity assessment for tachyonic-heuristics:* **Score 3** — Heuristics are documented, paired with response actions, deployed operationally, and the 14-heuristic engine is instrumented with FP suppression metrics. Score 4 requires automated heuristic generation from new taxonomy entries and continuous threshold optimization from Phase 10 feedback.
 
@@ -435,7 +438,7 @@ The agentic security pipeline's HEUR_TRIAGE → ANALYST_TRIAGE → SELF_IMPROVE 
 | True suppression rate | Fraction of FPs correctly suppressed by the heuristic | ANALYST_TRIAGE labels vs. HEUR_TRIAGE decisions |
 | False suppression rate | Fraction of TPs incorrectly suppressed | ANALYST_TRIAGE labels for findings that never reached analyst |
 | Pass-through FP rate | FPs that survived heuristic filtering and reached the analyst | ANALYST_TRIAGE FP labels on passed findings |
-| Heuristic coverage | Which taxonomy categories (of 144) does this heuristic apply to? | Mapping heuristic scope to taxonomy IDs |
+| Heuristic coverage | Which taxonomy categories (of 168) does this heuristic apply to? | Mapping heuristic scope to taxonomy IDs |
 
 *The feedback loop:*
 
@@ -597,14 +600,14 @@ Also enables: 8 MT-series attacks (multi-turn manipulation exploits the
 Also enables: 8 VE-series attacks (RAG poisoning injects untrusted
               content into the instruction channel via retrieval)
     ↓
-Total: 36 of 144 attacks (25%) trace to this single root cause
+Total: 36 of 168 attacks (21%) trace to this single root cause
 ```
 
 *Architectural invariant derived:*
 
 **"Untrusted input must be structurally separated from system instructions before processing."**
 
-If this invariant held — if the architecture fundamentally distinguished instruction tokens from data tokens — then 36 of 144 attack techniques would be eliminated by design, not by detection.
+If this invariant held — if the architecture fundamentally distinguished instruction tokens from data tokens — then 36 of 168 attack techniques would be eliminated by design, not by detection.
 
 *Counterfactual validation:*
 
@@ -735,7 +738,7 @@ The human gate on disclosure (EVIDENCED → DISCLOSED) is a formal constraint �
 
 *Coverage analysis:*
 
-Of the 144 attacks in the taxonomy, the 14 heuristics in HEUR_TRIAGE provide formal coverage for a measurable subset. Coverage analysis answers: which taxonomy IDs are formally covered (Phase 7), which are heuristically covered (Phase 3), and which rely on the scanner's broad detection (Phase 3) plus analyst judgment (Phase 5-6)?
+Of the 168 attacks in the taxonomy, the 14 heuristics in HEUR_TRIAGE provide formal coverage for a measurable subset. Coverage analysis answers: which taxonomy IDs are formally covered (Phase 7), which are heuristically covered (Phase 3), and which rely on the scanner's broad detection (Phase 3) plus analyst judgment (Phase 5-6)?
 
 ```
 COVERAGE MAP:

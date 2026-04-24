@@ -37,7 +37,7 @@ Score:   3-4  2    3    3    2-3  2    3    2    0-1  3
 
 | Phase | Score | Rationale |
 |---|---|---|
-| 1. Name | 3-4 | 144-attack taxonomy, machine-readable YAML, extensible schema, multi-framework mapping |
+| 1. Name | 3-4 | 168-attack taxonomy, machine-readable YAML, extensible schema, multi-framework mapping |
 | 2. Relate | 2 | OWASP/ATLAS mappings provide typed relationships; attack chain analysis exists; not yet a machine-readable graph with inference |
 | 3. Guess | 3 | 14 operational heuristics, remediation guidance with code examples, documented and instrumented |
 | 4. Measure | 3 | Per-heuristic metrics via analyst labels, self-improve feedback loop, adversarial hypothesis testing |
