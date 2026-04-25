@@ -63,7 +63,7 @@ The ESF [maps directly to both OWASP frameworks](/mappings/) so you can assess y
 ## Repository Structure
 
 ```
-tachyonic-esf/
+esf/
 ├── spec/
 │   └── ESF-v0.1.0.md                 # The living specification
 ├── rubric/
@@ -95,7 +95,7 @@ tachyonic-esf/
 
 The ESF is grounded in two concrete artifacts:
 
-**[tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics)** — An open taxonomy of 122 AI/LLM attack vectors mapped to OWASP LLM Top 10 and MITRE ATLAS. Implements ESF Phases 1-3 (taxonomy, ontology, heuristics). Apache 2.0.
+**[tachyonic-sh/taxonomy](https://github.com/tachyonic-sh/taxonomy)** — An open taxonomy of 168 AI/LLM attack vectors mapped to OWASP LLM Top 10 and MITRE ATLAS. Implements ESF Phases 1-3 (taxonomy, ontology, heuristics). Apache 2.0.
 
 **The Tachyonic Security Pipeline** — An agentic 11-stage security research pipeline that implements Phases 3-10 operationally. The pipeline accepts targets, runs methodology, self-improves with each campaign, and demonstrates the full ESF cycle in production. See the [pipeline mapping](/examples/tachyonic-pipeline-mapping.md) for details.
 
@@ -152,10 +152,10 @@ Apache 2.0 — see [LICENSE](/LICENSE).
 ## Citation
 
 ```
-@misc{tachyonic-esf,
+@misc{tachyonic-sh-esf,
   title={Evolutionary Security Framework: A Maturity Model for Progressive Determinism in Agentic Security Systems},
   author={Tachyonic},
   year={2026},
-  url={https://github.com/tachyonicai/tachyonic-esf}
+  url={https://github.com/tachyonic-sh/esf}
 }
 ```

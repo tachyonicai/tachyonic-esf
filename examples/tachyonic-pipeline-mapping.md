@@ -65,6 +65,6 @@ Score:   3-4  2    3    3    2-3  2    3    2    0-1  3
 
 ## Related Resources
 
-- Attack taxonomy: [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics)
+- Attack taxonomy: [tachyonic-sh/taxonomy](https://github.com/tachyonic-sh/taxonomy)
 - Blog post: [We Catalogued 122 Ways to Break AI Systems](https://tachyonicai.com/blog/122-attack-taxonomy/)
 - Assessment service: [Tachyonic](https://tachyonicai.com)

@@ -150,7 +150,7 @@ No system achieves Phase 9 for all properties. The frontier of unknown threats n
 
 **Worked Example: The Tachyonic Attack Taxonomy**
 
-The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) taxonomy is a reference implementation of Phase 1. It systematically catalogues over 140 distinct AI/LLM attack techniques across 13 categories, each mapped to industry frameworks (OWASP LLM Top 10, MITRE ATLAS).
+The [tachyonic-sh/taxonomy](https://github.com/tachyonic-sh/taxonomy) taxonomy is a reference implementation of Phase 1. It systematically catalogues 168 distinct AI/LLM attack techniques across 16 categories, each mapped to industry frameworks (OWASP LLM Top 10, MITRE ATLAS).
 
 *Taxonomy structure:*
 
@@ -192,11 +192,11 @@ The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) 
 - **Extensible schema** — YAML schema in `schema/attack_schema.yaml` allows community contribution of new attack definitions following the same format
 - **Machine-readable** — YAML format enables automated consumption by downstream phases (scanning, triage, detection)
 
-*Phase 1 maturity assessment for tachyonic-heuristics:* **Score 3-4** — The taxonomy is machine-readable, consistently structured, mapped to multiple industry frameworks, and extensible. It reaches Score 4 when dynamic update mechanisms (automated gap detection from Phase 10 feedback) are operational.
+*Phase 1 maturity assessment for tachyonic-sh/taxonomy:* **Score 3-4** — The taxonomy is machine-readable, consistently structured, mapped to multiple industry frameworks, and extensible. It reaches Score 4 when dynamic update mechanisms (automated gap detection from Phase 10 feedback) are operational.
 
 *Key insight from the taxonomy:* Most AI security discussions focus on a handful of well-known attacks. In reality, the attack surface spans 16 distinct categories with over 160 techniques. A system that blocks a naive instruction override (PI-001) might still fall to an encoding bypass (PI-series), a multi-turn escalation (MT-series), or an indirect injection through retrieved content (VE-series). The taxonomy makes this breadth visible and actionable.
 
-*Repository:* [github.com/tachyonicai/tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) (Apache 2.0)
+*Repository:* [github.com/tachyonic-sh/taxonomy](https://github.com/tachyonic-sh/taxonomy) (Apache 2.0)
 
 ---
 
@@ -254,13 +254,13 @@ The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) 
 
 **Worked Example: Ontological Relationships in the Attack Taxonomy**
 
-The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) taxonomy provides the naming (Phase 1). The ontological layer emerges from the relationships *between* those named entities — relationships that the repository's mapping files begin to capture.
+The [tachyonic-sh/taxonomy](https://github.com/tachyonic-sh/taxonomy) taxonomy provides the naming (Phase 1). The ontological layer emerges from the relationships *between* those named entities — relationships that the repository's mapping files begin to capture.
 
 *Framework mappings as ontological relationships:*
 
 The repository contains `taxonomy/owasp_mapping.yaml` and `taxonomy/atlas_mapping.yaml`. These are not just cross-references — they encode ontological relationships:
 
-- **Attack → exploits → Vulnerability Class** (OWASP mapping): PI-001 through PI-020 all exploit LLM01 (Prompt Injection), but so do MT-001 through MT-008 (Multi-Turn Manipulation). The ontology reveals that multi-turn manipulation is a *variant mechanism* for the same underlying vulnerability class.
+- **Attack → exploits → Vulnerability Class** (OWASP mapping): PI-001 through PI-020 all exploit LLM01 (Prompt Injection), but so do MT-001 through MT-010 (Multi-Turn Manipulation). The ontology reveals that multi-turn manipulation is a *variant mechanism* for the same underlying vulnerability class.
 - **Attack → maps-to → Adversarial Technique** (ATLAS mapping): MITRE ATLAS provides a complementary relationship graph showing how AI-specific attacks relate to broader adversarial tradecraft.
 
 *Cross-category attack chains visible in the ontology:*
@@ -286,7 +286,7 @@ The Excessive Agency (EA) category implicitly defines the critical trust boundar
 - **Defense → mitigates → Attack**: Formal mapping from remediation strategies back to specific attack IDs
 - **Attack → produces → Observable Signal**: What evidence does each attack leave? This feeds Phase 3 (heuristic detection)
 
-*Phase 2 maturity assessment for tachyonic-heuristics:* **Score 2** — Framework mappings (OWASP, ATLAS) provide typed relationships, and attack chain analysis in the blog post identifies cross-category paths. Score 3 requires the ontology to be machine-readable as a graph (not just YAML cross-references) with inference capability. Score 4 requires dynamic ontology updates from operational data.
+*Phase 2 maturity assessment for tachyonic-sh/taxonomy:* **Score 2** — Framework mappings (OWASP, ATLAS) provide typed relationships, and attack chain analysis in the blog post identifies cross-category paths. Score 3 requires the ontology to be machine-readable as a graph (not just YAML cross-references) with inference capability. Score 4 requires dynamic ontology updates from operational data.
 
 ---
 
@@ -340,7 +340,7 @@ The Excessive Agency (EA) category implicitly defines the critical trust boundar
 
 **Worked Example: Deriving Heuristics from the Attack Taxonomy**
 
-The [tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics) repository contains `remediation/by_owasp.yaml` with defensive guidance per OWASP category, and `remediation/code_examples/` with input validation and output sanitization patterns. These are Phase 3 artifacts — heuristic detection and response rules derived from the taxonomic and ontological understanding of Phases 1-2.
+The [tachyonic-sh/taxonomy](https://github.com/tachyonic-sh/taxonomy) repository contains `remediation/by_owasp.yaml` with defensive guidance per OWASP category, and `remediation/code_examples/` with input validation and output sanitization patterns. These are Phase 3 artifacts — heuristic detection and response rules derived from the taxonomic and ontological understanding of Phases 1-2.
 
 *Deriving detection heuristics from attack chains:*
 
@@ -367,7 +367,7 @@ In the agentic security pipeline, the HEUR_TRIAGE stage runs a Rust engine with 
 
 This demonstrates the funnel principle in action: 168 attack types in the taxonomy → scanned broadly by the scanner → filtered deterministically by 14 hardened heuristics → analyzed causally by the AI analyst for the remainder.
 
-*Phase 3 maturity assessment for tachyonic-heuristics:* **Score 3** — Heuristics are documented, paired with response actions, deployed operationally, and the 14-heuristic engine is instrumented with FP suppression metrics. Score 4 requires automated heuristic generation from new taxonomy entries and continuous threshold optimization from Phase 10 feedback.
+*Phase 3 maturity assessment for tachyonic-sh/taxonomy:* **Score 3** — Heuristics are documented, paired with response actions, deployed operationally, and the 14-heuristic engine is instrumented with FP suppression metrics. Score 4 requires automated heuristic generation from new taxonomy entries and continuous threshold optimization from Phase 10 feedback.
 
 ---
 
@@ -600,14 +600,14 @@ Also enables: 8 MT-series attacks (multi-turn manipulation exploits the
 Also enables: 8 VE-series attacks (RAG poisoning injects untrusted
               content into the instruction channel via retrieval)
     ↓
-Total: 36 of 168 attacks (21%) trace to this single root cause
+Total: 40 of 168 attacks (24%) trace to this single root cause
 ```
 
 *Architectural invariant derived:*
 
 **"Untrusted input must be structurally separated from system instructions before processing."**
 
-If this invariant held — if the architecture fundamentally distinguished instruction tokens from data tokens — then 36 of 168 attack techniques would be eliminated by design, not by detection.
+If this invariant held — if the architecture fundamentally distinguished instruction tokens from data tokens — then 40 of 168 attack techniques would be eliminated by design, not by detection.
 
 *Counterfactual validation:*
 
@@ -638,7 +638,7 @@ When the pipeline runs multiple campaigns and finds that MCP server targets cons
 
 This is where Phase 6 feeds forward to Phase 8 (structural constraint) — the causal understanding points to where architectural enforcement will have the highest impact.
 
-*Phase 6 maturity assessment for tachyonic-heuristics:* **Score 2** — The blog post demonstrates causal reasoning about prompt injection's root cause, and the taxonomy's structure implicitly groups attacks by mechanism. Score 3 requires formal counterfactual testing and prioritized invariant lists. Score 4 requires systematic cross-campaign causal analysis and causal models that drive architectural decisions.
+*Phase 6 maturity assessment for tachyonic-sh/taxonomy:* **Score 2** — The blog post demonstrates causal reasoning about prompt injection's root cause, and the taxonomy's structure implicitly groups attacks by mechanism. Score 3 requires formal counterfactual testing and prioritized invariant lists. Score 4 requires systematic cross-campaign causal analysis and causal models that drive architectural decisions.
 
 ---
 
@@ -1422,13 +1422,13 @@ Complete alphabetical glossary of all technical terms used in the framework.
 
 The ESF is grounded in the work of [Tachyonic](https://tachyonicai.com), which provides two concrete artifacts that serve as the reference implementation:
 
-1. **[tachyonic-heuristics](https://github.com/tachyonicai/tachyonic-heuristics)** — An open-source taxonomy of AI/LLM attack vectors, mapped to the OWASP LLM Top 10 and MITRE ATLAS. This implements Phases 1-3 of the ESF (taxonomy, partial ontology, remediation heuristics). Apache 2.0 licensed.
+1. **[tachyonic-sh/taxonomy](https://github.com/tachyonic-sh/taxonomy)** — An open-source taxonomy of AI/LLM attack vectors, mapped to the OWASP LLM Top 10 and MITRE ATLAS. This implements Phases 1-3 of the ESF (taxonomy, partial ontology, remediation heuristics). Apache 2.0 licensed.
 
 2. **The Tachyonic Agentic Security Pipeline** — An 11-stage pipeline (INIT → RECON → SCAN → HEUR_TRIAGE → ANALYST_TRIAGE → EVIDENCE → DOWNSTREAM_SPAWN → UPLOAD → NOTIFY → SELF_IMPROVE → DONE) that implements Phases 3-10 operationally. The pipeline accepts a target and hypothesis set, runs the full research methodology without human intervention, and self-improves with each campaign cycle.
 
 ### 9.2 Repository-to-Framework Mapping
 
-The tachyonic-heuristics repository structure maps directly to ESF phases:
+The tachyonic-sh/taxonomy repository structure maps directly to ESF phases:
 
 | Repository Path | ESF Phase | Role |
 |---|---|---|
