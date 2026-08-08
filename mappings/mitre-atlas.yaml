@@ -1,81 +1,155 @@
-# ESF ↔ MITRE ATLAS Mapping
-# Maps ESF phases to MITRE ATLAS tactics and techniques for AI/ML systems.
+# ESF <-> MITRE ATLAS Mapping
+# Maps ESF phases to MITRE ATLAS tactics for AI systems.
+#
+# Source: mitre-atlas/atlas-data at commit 2306ecaf04fb7a14be068b97e3ff40c2d9112e28
+# ("Release v2026.07", 2026-07-31), dist/v6/ATLAS-2026.07.yaml.
+# Content version 2026.07, format-version 6.0.0.
+# That release contains 1 matrix, 16 tactics, 101 top-level techniques,
+# 77 sub-techniques, 37 mitigations and 68 case studies.
+#
+# ATLAS moved to a monthly release cadence versioned YYYY.MM as of 2026.05.
+# This file is pinned above and must be re-verified against the pin when
+# updated, rather than against whatever "latest" resolves to.
+#
 # Reference: https://atlas.mitre.org/
 
 framework: "MITRE ATLAS"
+framework_version: "2026.07 (content), 6.0.0 (format)"
+framework_pin: "mitre-atlas/atlas-data@2306ecaf04fb7a14be068b97e3ff40c2d9112e28"
 esf_version: "0.1.0"
 
 # ATLAS organizes adversarial techniques by tactic (goal).
 # ESF maps each tactic to the phases most relevant for defense.
+# Tactics are listed in ATLAS matrix order.
 
 mappings:
 
   - atlas_tactic: "Reconnaissance"
-    atlas_id: "TA0001"
-    description: "Adversary gathers information about the AI system"
+    atlas_id: "AML.TA0002"
+    description: "Adversary gathers information about the AI system to plan future operations"
     esf_phases:
       primary: [1, 2]
       rationale: "Taxonomy (Phase 1) should classify reconnaissance techniques. Ontology (Phase 2) should map what information is exposed at each interface."
     tachyonic_categories: ["SPL"]
 
   - atlas_tactic: "Resource Development"
-    atlas_id: "TA0002"
-    description: "Adversary develops resources to support attack (poisoned data, adversarial examples)"
+    atlas_id: "AML.TA0003"
+    description: "Adversary develops resources to support attack (poisoned data, adversarial examples, poisoned artifacts)"
     esf_phases:
       primary: [1, 2, 3]
       rationale: "Classify resource types (Phase 1), map supply chain relationships (Phase 2), deploy integrity verification heuristics (Phase 3)."
     tachyonic_categories: ["SC"]
 
   - atlas_tactic: "Initial Access"
-    atlas_id: "TA0003"
+    atlas_id: "AML.TA0004"
     description: "Adversary gains initial access to the AI system"
     esf_phases:
       primary: [1, 2, 3, 7, 8]
       rationale: "Classify access vectors (Phase 1), map trust boundaries (Phase 2), deploy input validation heuristics (Phase 3), formalize access policies (Phase 7), structurally enforce access boundaries (Phase 8)."
     tachyonic_categories: ["PI", "VI", "VE"]
 
-  - atlas_tactic: "ML Model Access"
-    atlas_id: "TA0004"
-    description: "Adversary gains access to the ML model itself"
+  - atlas_tactic: "AI Model Access"
+    atlas_id: "AML.TA0000"
+    description: "Adversary gains some level of access to the AI model itself"
     esf_phases:
       primary: [2, 3, 8]
       rationale: "Map model access interfaces (Phase 2), deploy access monitoring heuristics (Phase 3), structurally enforce model access boundaries (Phase 8)."
     tachyonic_categories: ["SID", "SPL"]
 
   - atlas_tactic: "Execution"
-    atlas_id: "TA0005"
-    description: "Adversary causes the AI system to execute adversarial inputs"
+    atlas_id: "AML.TA0005"
+    description: "Adversary causes the AI system to execute adversarial inputs or code"
     esf_phases:
       primary: [3, 5, 7, 8]
       rationale: "Deploy execution monitoring heuristics (Phase 3), model baseline execution patterns (Phase 5), formalize execution policies (Phase 7), structurally constrain execution scope (Phase 8)."
     tachyonic_categories: ["PI", "JB", "EA", "MT"]
 
   - atlas_tactic: "Persistence"
-    atlas_id: "TA0006"
+    atlas_id: "AML.TA0006"
     description: "Adversary maintains access across sessions or model updates"
     esf_phases:
       primary: [2, 3, 6, 8]
       rationale: "Map persistence vectors (Phase 2), deploy session integrity heuristics (Phase 3), analyze root cause of persistence mechanisms (Phase 6), structurally enforce session isolation (Phase 8)."
     tachyonic_categories: ["MT", "VE"]
 
-  - atlas_tactic: "Evasion"
-    atlas_id: "TA0007"
+  - atlas_tactic: "Privilege Escalation"
+    atlas_id: "AML.TA0012"
+    description: "Adversary gains higher-level permissions within the AI system or its environment"
+    esf_phases:
+      primary: [2, 7, 8, 9]
+      rationale: "Map privilege boundaries and the paths between them (Phase 2), formalize the invariant that capability never amplifies (Phase 7), structurally enforce attenuation so escalation is impossible rather than detected (Phase 8), verify no execution trace exceeds its initial scope (Phase 9)."
+    tachyonic_categories: ["EA"]
+    notes: "Absent from the previous revision of this file. Becomes reachable once an AI system holds delegated authority rather than only answering queries."
+
+  - atlas_tactic: "Defense Evasion"
+    atlas_id: "AML.TA0007"
     description: "Adversary avoids detection by the AI system's defenses"
     esf_phases:
       primary: [4, 5, 10]
       rationale: "Measure detection effectiveness against evasion (Phase 4), model adversarial adaptation statistically (Phase 5), evolve defenses in response (Phase 10)."
     tachyonic_categories: ["JB", "PI", "VI"]
 
+  - atlas_tactic: "Credential Access"
+    atlas_id: "AML.TA0013"
+    description: "Adversary steals credentials, keys, or tokens reachable from the AI system"
+    esf_phases:
+      primary: [1, 2, 3, 8]
+      rationale: "Classify credential exposure vectors including context, tool configuration, and connector state (Phase 1), map where credentials live and which components can reach them (Phase 2), deploy secret detection on context and output (Phase 3), remove standing credentials in favour of action-scoped issuance (Phase 8)."
+    tachyonic_categories: ["SID", "SPL", "EA"]
+    notes: "Absent from the previous revision. ATLAS added AML.T0098 AI Agent Tool Credential Harvesting in 2026: compromising an agent with persistent tool access is equivalent to compromising those tools."
+
+  - atlas_tactic: "Discovery"
+    atlas_id: "AML.TA0008"
+    description: "Adversary enumerates the AI system's environment, capabilities, and configuration"
+    esf_phases:
+      primary: [2, 3, 8]
+      rationale: "Map what an agent can enumerate about its own tools, permissions, and environment (Phase 2), deploy enumeration-rate and probing heuristics (Phase 3), structurally limit the introspection surface (Phase 8)."
+    tachyonic_categories: ["SPL", "EA"]
+    notes: "Absent from the previous revision. Directly adjacent to OWASP LLM08:2026 Hidden Context Exposure - tool and function schema disclosure is a discovery primitive."
+
+  - atlas_tactic: "Lateral Movement"
+    atlas_id: "AML.TA0015"
+    description: "Adversary moves through the environment via the AI system to reach other systems or agents"
+    esf_phases:
+      primary: [2, 7, 8, 9]
+      rationale: "Map agent-to-agent and agent-to-system reachability (Phase 2), formalize the delegation-attenuation invariant (Phase 7), structurally isolate agents, sessions and tenants (Phase 8), verify no reachability path crosses a tenant boundary (Phase 9)."
+    tachyonic_categories: ["EA", "MT"]
+    notes: "Absent from the previous revision. This is the tactic that multi-agent architectures introduce and that single-model threat models have no place for."
+
   - atlas_tactic: "Collection"
-    atlas_id: "TA0008"
+    atlas_id: "AML.TA0009"
     description: "Adversary gathers data from the AI system"
     esf_phases:
       primary: [2, 3, 8]
       rationale: "Map data egress paths (Phase 2), deploy data loss prevention heuristics (Phase 3), structurally constrain data egress (Phase 8)."
     tachyonic_categories: ["SID", "SPL"]
 
+  - atlas_tactic: "AI Attack Staging"
+    atlas_id: "AML.TA0001"
+    description: "Adversary prepares and refines an attack offline before deploying it against the target"
+    esf_phases:
+      primary: [1, 2, 5, 10]
+      rationale: "Classify staging artifacts such as proxy models and crafted adversarial data (Phase 1), map which of the defender's assets enable staging (Phase 2), model the adversary's offline optimization process (Phase 5), and treat staging capability as an input to defense evolution (Phase 10)."
+    tachyonic_categories: ["SC", "VE"]
+    notes: >
+      Absent from the previous revision, and the tactic with no ATT&CK
+      equivalent. It is the adversary's own maturation loop - building a proxy,
+      testing against it, refining - and is therefore the closest external
+      counterpart to ESF Phase 10. Defender evolution and attacker staging are
+      the same process running on opposite sides of the boundary, which is the
+      argument for why Phase 10 cannot be optional.
+
+  - atlas_tactic: "Command and Control"
+    atlas_id: "AML.TA0014"
+    description: "Adversary establishes communication with compromised AI systems to control them"
+    esf_phases:
+      primary: [2, 3, 8]
+      rationale: "Map the egress and callback channels an agent can reach (Phase 2), deploy beaconing and anomalous-egress heuristics on tool and network calls (Phase 3), structurally constrain egress destinations to an allowlist (Phase 8)."
+    tachyonic_categories: ["SID", "EA"]
+    notes: "Absent from the previous revision. An agent with network-capable tools is a controllable endpoint."
+
   - atlas_tactic: "Exfiltration"
-    atlas_id: "TA0009"
+    atlas_id: "AML.TA0010"
     description: "Adversary extracts data from the AI system"
     esf_phases:
       primary: [3, 7, 8, 9]
@@ -83,9 +157,66 @@ mappings:
     tachyonic_categories: ["SID"]
 
   - atlas_tactic: "Impact"
-    atlas_id: "TA0010"
+    atlas_id: "AML.TA0011"
     description: "Adversary causes harm through the AI system"
     esf_phases:
       primary: [3, 7, 8, 9]
-      rationale: "Deploy impact mitigation heuristics — circuit breakers, rollback (Phase 3), formalize safety constraints (Phase 7), structurally enforce blast radius limits (Phase 8), formally verify safety properties (Phase 9)."
+      rationale: "Deploy impact mitigation heuristics such as circuit breakers and rollback (Phase 3), formalize safety constraints (Phase 7), structurally enforce blast radius limits (Phase 8), formally verify safety properties (Phase 9)."
     tachyonic_categories: ["EA", "IOH", "UC"]
+
+# Corrections applied in this revision, recorded so the errors are not
+# reintroduced.
+corrections:
+
+  fabricated_identifiers: >
+    The previous revision used sequential identifiers TA0001 through TA0010.
+    ATLAS identifiers are of the form AML.TAxxxx and are not sequential in
+    matrix order. None of the ten previous values resolved in either ATLAS or
+    ATT&CK - for example Reconnaissance was recorded as TA0001, where ATLAS uses
+    AML.TA0002 and ATT&CK uses TA0043. All sixteen identifiers in this revision
+    are taken from the pinned release.
+
+  renamed_tactics: >
+    Two tactic names were wrong. "ML Model Access" is AI Model Access, and
+    "Evasion" is Defense Evasion. ATLAS carried out a systematic ML-to-AI
+    rename that this file had not tracked; the same rename runs through the
+    mitigation set in 2026.07, where for example Model Hardening became
+    Predictive AI Model Hardening.
+
+  missing_tactics: >
+    The previous revision covered 10 of 16 tactics. The six absent - Privilege
+    Escalation, Credential Access, Discovery, Lateral Movement, AI Attack
+    Staging and Command and Control - are precisely the tactics that become
+    reachable when an AI system is an agent holding tools and delegated
+    authority rather than a model behind an API. A framework positioned for
+    agentic hardening cannot omit them.
+
+# Release context for 2026.07 and the releases feeding it.
+release_notes:
+
+  agentic_techniques: >
+    The 2026 releases added an agentic technique family that the tactic-level
+    mapping above only partially exposes: AML.T0096 AI Service API, AML.T0098 AI
+    Agent Tool Credential Harvesting, AML.T0099 AI Agent Tool Data Poisoning,
+    AML.T0100 AI Agent Clickbait, AML.T0101 Data Destruction via AI Agent Tool
+    Invocation, and the AML.T0110 AI Agent Tool Poisoning family covering
+    definition and instructions, implementation, and runtime response.
+
+  consolidation: >
+    2026.07 consolidated Publish Poisoned Datasets (AML.T0019), Publish Poisoned
+    Models (AML.T0058) and Publish Poisoned AI Agent Tool (AML.T0104) into
+    AML.T0115 Publish Poisoned AI Artifacts with sub-techniques, and renamed
+    Poison Training Data to Training Data Poisoning. Any technique-level mapping
+    built against an earlier release needs re-pointing.
+
+  version_skew: >
+    OWASP's GenAI LLM Top 10 2026 Appendix A pins ATLAS at content v2026.06
+    while this file pins 2026.07. The tactic set is identical between them; the
+    difference is at technique and mitigation level. Noted so the two ESF
+    mapping files are not assumed to be pinned together.
+
+  next_technique_level_mapping: >
+    This file maps tactics only. With 101 top-level techniques and 77
+    sub-techniques in the pinned release, a technique-level mapping is a
+    separate and much larger piece of work, and would need a maintenance story
+    given the monthly cadence.
