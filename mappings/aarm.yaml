@@ -13,8 +13,11 @@
 # Reference: https://aarm.dev/spec
 
 framework: "CSA AARM (Autonomous Action Runtime Management)"
+framework_version: "R1-R9 as published at aarm.dev/spec, retrieved 2026-08-08; specification arXiv 2602.09433"
 framework_scope: "R1-R9; Core (R1-R6 MUST), Extended (R1-R9 including R7-R9 SHOULD)"
 esf_version: "0.1.0"
+# AARM does not publish a numbered version. This mapping is therefore pinned by
+# requirement set and retrieval date. Re-verify R1-R9 wording on update.
 
 # Positioning, consistent with how ESF relates to OWASP:
 #   OWASP names the risks.
