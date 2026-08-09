@@ -31,7 +31,6 @@ mappings:
       phase_3: "Deploy input, retrieval, multimodal, and inter-agent boundary heuristics."
       phase_6: "Root cause: instruction/data channel conflation across one or more trust boundaries."
       phase_8: "Structurally separate instructions, user data, retrieved content, tool output, and inter-agent messages."
-    tachyonic_heuristics_ids: "PI-001 through PI-020, JB-001 through JB-022, VI-001 through VI-012, MT-001 through MT-010, CTX-001 through CTX-002, CTX-005, IAC-001 through IAC-002, IAC-004, IAC-006"
     notes: "2026 scope expansion: cross-modal attacks, memory persistence, and agentic blast radius. OWASP notes prompt injection would fall out of the top 10 on raw incident data alone and holds first place on the practitioner vote; they attribute the gap to a defense effect rather than declining risk."
 
   - owasp_id: "LLM02"
@@ -43,7 +42,6 @@ mappings:
       phase_2: "Map data flow from sensitive sources through context and output channels."
       phase_3: "Deploy DLP-style output checks and authorization checks before data leaves the system."
       phase_8: "Structurally constrain data egress to authorized channels with provenance."
-    tachyonic_heuristics_ids: "SID-001 through SID-010, CTX-003"
     notes: "The one entry where the practitioner vote and the incident record agree, and where OWASP states confidence is highest."
 
   - owasp_id: "LLM03"
@@ -56,7 +54,6 @@ mappings:
       phase_3: "Deploy scope guards, capability checks, approval consistency checks, and action limits."
       phase_8: "Enforce capability-based architecture with immutable scopes and external authorization."
       phase_9: "Verify that no execution trace can exceed initialized capability scope."
-    tachyonic_heuristics_ids: "EA-001 through EA-020, CTX-004, CTX-006, UCE-003 through UCE-004, UCE-006, IAC-005, HTE-002"
     notes: "OWASP moved this to third because the vote and the incident record agree that agentic deployments are where damage is landing. Pair with the Agentic Top 10 once the model acts rather than advises."
 
   - owasp_id: "LLM04"
@@ -68,7 +65,6 @@ mappings:
       phase_2: "Map provenance, dependency, registry, and runtime loading trust boundaries."
       phase_3: "Deploy integrity verification for models, tools, connectors, skills, and dependencies."
       phase_8: "Enforce signed artifacts, pinned registries, and sandboxed dynamic components."
-    tachyonic_heuristics_ids: "SC-001 through SC-012, UCE-005"
     notes: "2026 scope expansion: artifact-trust failure, where a promoted model artifact is not what it claims to be. Also now owns registration of hallucinated package names as a supply chain vector."
 
   - owasp_id: "LLM05"
@@ -80,8 +76,6 @@ mappings:
       phase_2: "Map how data enters model knowledge, retrieval stores, or self-improvement loops."
       phase_3: "Deploy provenance and anomaly checks before data enters model knowledge paths."
       phase_8: "Constrain ingestion and retraining through signed provenance and review gates."
-    tachyonic_heuristics_ids: ""
-    related_tachyonic_heuristics_ids: "SC-001 through SC-012, VE-001 through VE-010"
     notes: "Mapping/remediation coverage only; no dedicated DMP-series public attack IDs. 2026 scope expansion: absorbs fine-tuning subversion."
 
   - owasp_id: "LLM06"
@@ -96,7 +90,6 @@ mappings:
       phase_7: "Formalize deterministic resource bounds across tokens, spend, recursion depth, step count, and wall-clock time."
       phase_8: "Enforce non-overridable budget ceilings that halt inference, plus agent-level circuit breakers with step, depth, time, and per-run cost limits."
       phase_9: "Verify no input can exceed configured resource ceilings."
-    tachyonic_heuristics_ids: "UC-001 through UC-002"
     notes: >
       The most instructive entry in the 2026 release for ESF purposes. OWASP
       reframed this from denial of service to cost asymmetry, and stated the
@@ -121,7 +114,6 @@ mappings:
       phase_3: "Deploy grounding, citation verification, completion verification, and approval-text checks."
       phase_7: "Formalize a claim-check-act separation: generation is separated from execution, and claims are verified before an action depends on them."
       phase_8: "Derive critical state and approval text from system facts, not model claims. Validate tool arguments, authorization, preconditions, and current state independently before execution."
-    tachyonic_heuristics_ids: "MIS-001 through MIS-006, HTE-001, HTE-003 through HTE-006"
     notes: >
       Reframed for 2026 from a user-trust problem to a system-level failure:
       model output now drives tool calls, infers state, and authorizes actions,
@@ -141,7 +133,6 @@ mappings:
       phase_3: "Deploy output scanning and configuration exposure controls."
       phase_6: "Root cause: hidden context is treated as a security boundary when it is only an unenumerated one. The model can read it, so an attacker can eventually reconstruct it."
       phase_8: "Externalize secrets out of context entirely, and enforce authorization, privilege separation, policy, and content filtering in deterministic systems outside the model."
-    tachyonic_heuristics_ids: "SPL-001 through SPL-012, IAC-003"
     notes: >
       Materially re-scoped, not merely renamed. No longer just the system
       prompt: it now covers any non-user-visible context, and is framed as an
@@ -169,7 +160,6 @@ mappings:
       phase_2: "Map document ingestion, embedding, storage, retrieval, ranking, and context insertion."
       phase_3: "Deploy provenance and injection scoring on retrieved content before context insertion."
       phase_8: "Enforce provenance and trust labels on all retrieved content."
-    tachyonic_heuristics_ids: "VE-001 through VE-010"
     notes: "Scope unchanged from 2025; rank moved only because entries above it rose."
 
   - owasp_id: "LLM10"
@@ -181,7 +171,6 @@ mappings:
       phase_2: "Map model output into every downstream interpreter or execution boundary."
       phase_3: "Deploy output encoding, command/link checks, and execution gating."
       phase_8: "Prevent model output from becoming executable without structural validation."
-    tachyonic_heuristics_ids: "IOH-001 through IOH-008, UCE-001 through UCE-002"
     notes: "Scope expanded even though rank fell - OWASP states the drop reflects everything above it becoming more urgent, not the risk diminishing. Now spans insecure code that assistants generate at scale, ANSI escape sequences in terminal and IDE rendering, and auto-fetching renderers as exfiltration channels."
 
 # Release notes relevant to how this file should be maintained.
@@ -217,3 +206,69 @@ release_notes:
     single version-pinned appendix, explicitly to prevent citation decay. The
     ESF mappings directory follows the same convention as of this revision:
     every mapping file carries `framework_version`.
+
+# ---------------------------------------------------------------------------
+# Everything below this line is written by the Tachyonic taxonomy generator.
+# Everything above it is maintained by hand.
+#
+# The generator used to rebuild this whole file from tables held inside the
+# script, which meant a sync silently reverted hand-written content - no
+# conflict, because the generator did not know it was not the only writer.
+# It now writes only between the markers, and refuses to write at all if they
+# are missing.
+#
+# Which attack IDs roll up to which risk is the one thing the generator knows
+# and an editor does not. Phase mappings, previous_id, rank_change, release
+# notes and every judgement in this file stay above the line.
+# BEGIN GENERATED BLOCK
+# Generated by tachyonic scripts/sync-oss.py. Do not hand-edit: the next
+# sync overwrites everything between the markers. Everything outside them
+# is hand-maintained and the generator never touches it.
+# Bound to OWASP LLM Top 10 2026 via owasp-llm-top10-2026.yaml.
+attack_coverage:
+  framework_version: "2026"
+  total_published_attacks: 168
+  entries:
+    - owasp_id: "LLM01"
+      name: "Prompt Injection"
+      total: 71
+      attack_ids: "PI-001 through PI-020, JB-001 through JB-022, VI-001 through VI-012, MT-001 through MT-010, CTX-001 through CTX-002, CTX-005, IAC-001 through IAC-002, IAC-004, IAC-006"
+    - owasp_id: "LLM02"
+      name: "Sensitive Information Disclosure"
+      total: 11
+      attack_ids: "SID-001 through SID-010, CTX-003"
+    - owasp_id: "LLM03"
+      name: "Excessive Agency"
+      total: 27
+      attack_ids: "EA-001 through EA-020, CTX-004, CTX-006, UCE-003 through UCE-004, UCE-006, IAC-005, HTE-002"
+    - owasp_id: "LLM04"
+      name: "Supply Chain"
+      total: 13
+      attack_ids: "SC-001 through SC-012, UCE-005"
+    - owasp_id: "LLM05"
+      name: "Data and Model Poisoning"
+      total: 0
+      attack_ids: ""
+      related_attack_ids: "SC-001 through SC-012, VE-001 through VE-010"
+      notes: "Mapping/remediation coverage only; no dedicated DMP-series public attack IDs."
+    - owasp_id: "LLM06"
+      name: "Unbounded Consumption"
+      total: 2
+      attack_ids: "UC-001 through UC-002"
+    - owasp_id: "LLM07"
+      name: "Misinformation"
+      total: 11
+      attack_ids: "MIS-001 through MIS-006, HTE-001, HTE-003 through HTE-006"
+    - owasp_id: "LLM08"
+      name: "Hidden Context Exposure"
+      total: 13
+      attack_ids: "SPL-001 through SPL-012, IAC-003"
+    - owasp_id: "LLM09"
+      name: "Vector and Embedding Weaknesses"
+      total: 10
+      attack_ids: "VE-001 through VE-010"
+    - owasp_id: "LLM10"
+      name: "Improper Output Handling"
+      total: 10
+      attack_ids: "IOH-001 through IOH-008, UCE-001 through UCE-002"
+# END GENERATED BLOCK
