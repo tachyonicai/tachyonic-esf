@@ -1,7 +1,14 @@
-# ESF ↔ OWASP Top 10 for Agentic Applications (2026) Mapping
+# ESF ↔ OWASP Top 10 for Agentic Applications (ASI, 2026) Mapping
 # For each agentic risk, which ESF phases are most relevant.
+#
+# Scope boundary, set by OWASP in the GenAI LLM Top 10 2026: this list owns the
+# risk once the model is an actor - with tools it can call, memory carried
+# between sessions, and downstream consequences it sets in motion. While the
+# model is a component inside an application, the risk belongs to the LLM Top 10.
+# Neither list covers an agentic deployment alone. See owasp-llm-top10.yaml.
 
-framework: "OWASP Top 10 for Agentic Applications (2026)"
+framework: "OWASP Top 10 for Agentic Applications (ASI)"
+framework_version: "2026 (announced 2025-12-09)"
 esf_version: "0.1.0"
 
 mappings:

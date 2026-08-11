@@ -36,15 +36,35 @@ Name → Relate → Guess → Measure → Model → Explain → Formalize → Co
 
 **The key insight:** not everything moves to Phase 9. The distribution is intentionally pyramidal — many heuristics, few proofs. The framework helps you decide *what to harden* based on consequence, stability, frequency, and trust boundary position.
 
-## How It Relates to OWASP
+## How It Relates to Existing Frameworks
 
-The ESF is **complementary to OWASP**, not competitive.
+The ESF is **complementary**, not competitive. The frameworks below describe *what* to worry about and *what* a system must do. The ESF describes *how a security programme matures* to the point of doing it well.
 
-- **OWASP LLM Top 10** tells you *what* the risks are
-- **OWASP Agentic Top 10** tells you *what's different* about agentic AI systems
-- **ESF** tells you *how to progressively harden* against those risks — from first detection to formal proof
+- **OWASP GenAI LLM Top 10 (2026)** tells you *what* the risks are when the model is a component
+- **OWASP Top 10 for Agentic Applications (2026)** tells you *what changes* when the model becomes an actor
+- **MITRE ATLAS** tells you *how adversaries* operate against AI systems
+- **CSA AARM** tells you *what capabilities* an agentic runtime must provide
+- **ESF** tells you *how to progressively harden* — from first detection to formal proof
 
-The ESF [maps directly to both OWASP frameworks](/mappings/) so you can assess your maturity against risks you already track.
+The ESF [maps to all four](/mappings/), version-pinned, so you can assess your maturity against risks and requirements you already track.
+
+### The component/actor boundary
+
+OWASP drew an explicit line in the 2026 release, and the ESF mappings follow it:
+
+> This list owns the risk when the model is a component inside your application. The moment that model becomes an actor, with tools it can call, memory it carries between sessions, and consequences it sets in motion downstream, the risk moves to the OWASP Agentic Top 10.
+
+Neither list covers an agentic deployment on its own. If your system calls tools, you need both — and the ESF phases apply across the boundary rather than sitting on one side of it.
+
+### External corroboration
+
+The ESF argues that security properties should be moved out of the model and into the structure around it — Phase 8, Constrain. That argument is no longer only ours. It opens the OWASP GenAI LLM Top 10 2026:
+
+> Stop trying to build a model that cannot be fooled. Build the system around it, so that when the model is fooled, and it will be, nothing important breaks.
+
+The same document states the Phase 3 to Phase 8 transition directly in its guidance on resource controls: spending caps *"must be enforcement mechanisms that halt inference when exceeded, rather than alerting thresholds that fast-accumulating workloads can outpace."* And on hidden context, that critical controls *"should be enforced in a deterministic and auditable manner, which LLMs are not well suited to provide."*
+
+A heuristic that alerts and a constraint that halts are different maturity levels of the same control. Naming that difference, and knowing which properties deserve which, is what the ESF is for.
 
 ## Quick Start
 
@@ -73,8 +93,10 @@ esf/
 ├── guides/
 │   └── quick-start.md                 # Assess your system in 30 minutes
 ├── mappings/
-│   ├── owasp-llm-top10.yaml          # ESF ↔ OWASP LLM Top 10
-│   ├── owasp-agentic-top10.yaml       # ESF ↔ OWASP Agentic Top 10
+│   ├── owasp-llm-top10.yaml          # ESF ↔ OWASP GenAI LLM Top 10 (2026)
+│   ├── owasp-agentic-top10.yaml       # ESF ↔ OWASP Agentic Top 10 (2026)
+│   ├── mitre-atlas.yaml               # ESF ↔ MITRE ATLAS (2026.07)
+│   ├── aarm.yaml                      # ESF ↔ CSA AARM (R1-R9)
 │   └── pipeline-mapping-template.yaml # Map YOUR system to ESF
 └── examples/
     ├── tachyonic-pipeline-mapping.md  # Reference implementation

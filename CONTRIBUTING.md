@@ -16,15 +16,35 @@ Submit as a markdown file in `examples/worked-examples/` following the existing 
 
 ### Framework Mappings
 
-Map the ESF to additional industry standards or frameworks. Current mappings cover OWASP LLM Top 10 and OWASP Agentic Top 10. We welcome mappings to:
+Map the ESF to additional industry standards or frameworks. Current mappings:
 
-- NIST AI Risk Management Framework (AI RMF)
-- ISO/IEC 27001 (especially Annex A controls)
-- MITRE ATLAS (expanding the existing mapping)
+| File | Framework | Pinned at |
+|---|---|---|
+| `owasp-llm-top10.yaml` | OWASP GenAI LLM Top 10 | 2026 v1.0 |
+| `owasp-agentic-top10.yaml` | OWASP Top 10 for Agentic Applications (ASI) | 2026 |
+| `mitre-atlas.yaml` | MITRE ATLAS (tactic level) | 2026.07 |
+| `aarm.yaml` | CSA AARM | R1-R9 |
+
+We welcome mappings to:
+
+- NIST AI Risk Management Framework (AI RMF) and NIST AI 600-1
+- ISO/IEC 27001 (especially Annex A controls) and ISO/IEC 42001
+- CSA AI Controls Matrix (AICM)
 - STRIDE threat modeling
 - Google SAIF
+- MITRE ATLAS at technique level — the existing mapping covers the 16 tactics only, and the pinned release carries 101 top-level techniques and 77 sub-techniques
 
-Submit as YAML in `mappings/` following the existing schema.
+Submit as YAML in `mappings/` following the existing schema, or open an issue using the "Framework Extension" template to discuss first.
+
+#### Mapping conventions
+
+Upstream frameworks move, and several now move monthly. Mappings must be pinned and must fail loudly when they go stale:
+
+- **`framework_version` is required.** State what release the mapping was written against. Where the upstream publishes no version number, pin by requirement set and retrieval date.
+- **Add `framework_pin` where the upstream is a repository.** A commit SHA is better than a tag and much better than "latest".
+- **Record identifier migrations.** Where an upstream rebinds identifiers between releases, carry the old one — `previous_id` in the OWASP mappings — so a reader can tell a moved identifier from a wrong one. The 2026 OWASP release rebound eight of ten identifiers while adding and removing no risks; a mapping keyed on the identifier alone failed silently rather than obviously.
+- **Do not invent taxonomy IDs.** Where an upstream's scope now exceeds what `tachyonic-sh/taxonomy` covers, record the gap in `notes` rather than filling it with an ID that does not exist.
+- **Verify against the pin, not against the website.** Framework sites render the current release; the pinned artifact is what the mapping claims to describe.
 
 ### Assessment Feedback
 

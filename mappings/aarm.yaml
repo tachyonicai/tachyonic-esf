@@ -1,0 +1,253 @@
+# ESF <-> CSA AARM (Autonomous Action Runtime Management) Mapping
+#
+# AARM differs in kind from the other mappings in this directory. OWASP and
+# ATLAS are catalogs of risks and adversary techniques: they say what can go
+# wrong. AARM is a system category specification: it says what an agentic
+# runtime security system must be able to do.
+#
+# The mapping axis is therefore different. For OWASP and ATLAS, ESF phases
+# answer "how do I defend against this?". For AARM, ESF phases answer "at what
+# maturity does this requirement become genuinely satisfiable rather than
+# nominally claimed?".
+#
+# Reference: https://aarm.dev/spec
+
+framework: "CSA AARM (Autonomous Action Runtime Management)"
+framework_version: "R1-R9 as published at aarm.dev/spec, retrieved 2026-08-08; specification arXiv 2602.09433"
+framework_scope: "R1-R9; Core (R1-R6 MUST), Extended (R1-R9 including R7-R9 SHOULD)"
+esf_version: "0.1.0"
+# AARM does not publish a numbered version. This mapping is therefore pinned by
+# requirement set and retrieval date. Re-verify R1-R9 wording on update.
+
+# Positioning, consistent with how ESF relates to OWASP:
+#   OWASP names the risks.
+#   ATLAS names the adversary techniques.
+#   AARM names the runtime capabilities a system must provide.
+#   ESF describes the maturation that gets an organization to the point where
+#   those capabilities can be built, trusted, and reasoned about.
+#
+# ESF does not certify AARM conformance and is not a competing specification.
+
+requirements:
+
+  - aarm_id: "R1"
+    name: "Pre-execution interception"
+    level: "MUST"
+    conformance: "Core"
+    description: "All actions intercepted before execution. No post-hoc detection. No action may bypass the guard."
+    esf_phases:
+      primary: [2, 8]
+      minimum_viable: 8
+      rationale: "Non-bypassability is a structural property, not a detection quality. Phase 2 (Relate) is the unrecognized prerequisite: you cannot claim no action bypasses the guard until the ontology enumerates every path from agent to tool. Phase 8 (Constrain) is where interception becomes architecturally guaranteed rather than merely usual. A Phase 3 system can detect unintercepted actions after the fact; it cannot assert R1."
+    tachyonic_categories: ["EA", "VE"]
+
+  - aarm_id: "R2"
+    name: "Context accumulation"
+    level: "MUST"
+    conformance: "Core"
+    description: "Append-only, hash-chained session logs covering the original user request, action history, data classifications, tool outputs, and entities accessed."
+    esf_phases:
+      primary: [2, 4, 7]
+      minimum_viable: 7
+      rationale: "Phase 2 identifies what context exists and where it originates. Phase 4 (Measure) supplies the instrumentation that captures it. Phase 7 (Formalize) is where the chain becomes an invariant rather than a logging convention: append-only and tamper-evident are properties that must always hold, which is Phase 7's defining question."
+    tachyonic_categories: ["MT", "SID"]
+
+  - aarm_id: "R3"
+    name: "Policy evaluation with intent alignment"
+    level: "MUST"
+    conformance: "Core"
+    description: "Policy engine evaluates action-context pairs against both action fields and accumulated session context, assessing alignment with stated intent."
+    esf_phases:
+      primary: [5, 6, 7]
+      minimum_viable: 7
+      rationale: "Phase 5 (Model) produces the baseline understanding of normal goal-action alignment that intent predicates depend on, and Phase 6 (Explain) is what lets an author write a predicate that targets a cause rather than a symptom. Phase 7 is where those predicates become deterministic rules. Authoring intent-alignment policy without Phase 5 and 6 produces rules that encode a guess, and R3 is satisfied in form only."
+    tachyonic_categories: ["EA", "MT", "PI"]
+
+  - aarm_id: "R4"
+    name: "Authorization decisions"
+    level: "MUST"
+    conformance: "Core"
+    description: "Five decision types enforced: ALLOW, DENY, MODIFY, STEP_UP, DEFER."
+    esf_phases:
+      primary: [7, 8]
+      minimum_viable: 7
+      rationale: "The decision codomain is a formal commitment: every action in scope receives exactly one of a closed set of outcomes, which is Phase 7's binary permit-or-deny character. Phase 8 is where the decisions become the enforcement architecture rather than advisory labels. Note that MODIFY and DEFER are what let a Phase 7-8 system be strict without being brittle; a system offering only ALLOW and DENY tends to be disabled in production, which is a maturity failure disguised as a coverage failure."
+    tachyonic_categories: ["EA", "IOH"]
+
+  - aarm_id: "R5"
+    name: "Tamper-evident receipts"
+    level: "MUST"
+    conformance: "Core"
+    description: "Every action, accumulated context, policy decision, and execution outcome recorded in cryptographically protected receipts supporting offline verification."
+    esf_phases:
+      primary: [4, 7, 9]
+      minimum_viable: 7
+      rationale: "Phase 4 supplies the record. Phase 7 makes integrity an invariant. Phase 9 (Prove) is the ceiling rather than the floor: offline verifiability without trusting the producer is the evidentiary form of a proof obligation, and it is what allows a claim about past enforcement to be checked rather than believed."
+    tachyonic_categories: ["SID", "SC"]
+
+  - aarm_id: "R6"
+    name: "Identity binding"
+    level: "MUST"
+    conformance: "Core"
+    description: "Actions bound to all identity layers - human principal, service account, agent session, role and privilege scope - with claims validated against trusted sources including freshness and revocation."
+    esf_phases:
+      primary: [2, 7, 8]
+      minimum_viable: 8
+      rationale: "Phase 2 is load-bearing and routinely skipped: binding to all identity layers presupposes an ontology that enumerates them, and most programs discover mid-implementation that the human principal was never modeled. Phase 7 formalizes freshness and revocation as always-true conditions. Phase 8 is where binding becomes structural, so that an unbound action is impossible rather than flagged."
+    tachyonic_categories: ["EA", "SC"]
+
+  - aarm_id: "R7"
+    name: "Semantic distance tracking"
+    level: "SHOULD"
+    conformance: "Extended"
+    description: "Quantify drift from the original user request using embedding similarity; high divergence warrants escalation or deferral. Computation methods implementation-flexible."
+    esf_phases:
+      primary: [5]
+      minimum_viable: 5
+      rationale: "Embedding similarity is a Phase 5 control: statistical, probabilistic, predictive. This is the one AARM requirement that sits at a materially lower determinism than the rest, and the mismatch is the most useful thing ESF has to say about the specification. See determinism_note below."
+    determinism_note: "R7 recommends a Phase 5 technique for use inside what R1-R6 establish as a Phase 8 enforcement boundary. Placing a probabilistic signal in a deterministic enforcement path reintroduces exactly the nondeterminism Phase 8 exists to remove, and makes the enforcement path itself model-influenced and therefore adversary-reachable through the model. The ESF-consistent resolution is not to skip R7 but to run it out of band: the Phase 5 signal is computed asynchronously and feeds Phase 7 rule updates, so the control objective is met while enforcement remains Phase 8. AARM permits this - it states that computation methods remain implementation-flexible."
+    tachyonic_categories: ["MT", "EA", "PI"]
+
+  - aarm_id: "R8"
+    name: "Telemetry export"
+    level: "SHOULD"
+    conformance: "Extended"
+    description: "Export receipts and context logs in a structured format supporting SIEM integration, compliance reporting, and external audit without direct system access."
+    esf_phases:
+      primary: [4]
+      minimum_viable: 4
+      rationale: "Squarely Phase 4 (Measure). R8 is the requirement most often satisfied before any of the others, because export is a reporting concern rather than an enforcement one. Its presence says nothing about enforcement maturity, and it should not be read as progress toward Core."
+    tachyonic_categories: ["SID"]
+
+  - aarm_id: "R9"
+    name: "Least privilege enforcement"
+    level: "SHOULD"
+    conformance: "Extended"
+    description: "Mint narrowly scoped credentials per action rather than relying on broad standing permissions."
+    esf_phases:
+      primary: [2, 8]
+      minimum_viable: 8
+      rationale: "Phase 2 maps the identity-to-capability graph that scoping narrows. Phase 8 is where standing authority is removed structurally, so that exceeding scope is impossible rather than detected. Note the inversion: R9 is only a SHOULD in AARM, but in ESF terms it is one of the highest-determinism requirements in the specification. A system that meets R9 properly is demonstrating Phase 8 capability regardless of what its Core status says."
+    tachyonic_categories: ["EA", "SPL"]
+
+# AARM enumerates eleven threat classes. Mapped to the phases where each is
+# addressed, in the same shape as the ATLAS mapping.
+threat_classes:
+
+  - aarm_class: "Prompt injection (direct and indirect)"
+    esf_phases:
+      primary: [1, 2, 3, 8]
+      rationale: "Classify injection paths (Phase 1), map untrusted input reaching instruction context (Phase 2), deploy boundary heuristics (Phase 3), structurally separate instruction and data channels (Phase 8)."
+    tachyonic_categories: ["PI", "JB", "VI"]
+
+  - aarm_class: "Malicious tool outputs"
+    esf_phases:
+      primary: [2, 3, 8]
+      rationale: "Map tool output as an untrusted input path (Phase 2), deploy output validation heuristics (Phase 3), structurally constrain what tool output can influence (Phase 8)."
+    tachyonic_categories: ["IOH", "PI"]
+
+  - aarm_class: "Confused deputy"
+    esf_phases:
+      primary: [2, 7, 8]
+      rationale: "Map delegated authority paths (Phase 2), formalize the authority-to-action binding (Phase 7), structurally scope authority per action (Phase 8)."
+    tachyonic_categories: ["EA"]
+
+  - aarm_class: "Over-privileged credentials"
+    esf_phases:
+      primary: [2, 8]
+      rationale: "Map standing credential scope (Phase 2), structurally remove standing authority (Phase 8). See R9."
+    tachyonic_categories: ["EA", "SPL"]
+
+  - aarm_class: "Data exfiltration via action composition"
+    esf_phases:
+      primary: [2, 3, 7, 9]
+      rationale: "Map composable egress paths (Phase 2), deploy composition heuristics (Phase 3), formalize temporal constraints over action sequences (Phase 7), formally verify containment across composed actions (Phase 9). Composition is where single-action policy fails, and where Phase 7 temporal reasoning earns its cost."
+    tachyonic_categories: ["SID", "MT"]
+
+  - aarm_class: "Goal hijacking"
+    esf_phases:
+      primary: [2, 5, 6, 8]
+      rationale: "Map the goal derivation chain (Phase 2), model baseline goal-action alignment (Phase 5), identify the cause as mutable goal state reachable from untrusted input (Phase 6), structurally separate goal specification from data channels (Phase 8)."
+    tachyonic_categories: ["PI", "EA"]
+
+  - aarm_class: "Intent drift"
+    esf_phases:
+      primary: [5, 7]
+      rationale: "Model divergence statistically (Phase 5), convert stable drift signatures into deterministic rules (Phase 7). This is the class R7 targets, and the phase gap between 5 and 7 is exactly the determinism_note under R7."
+    tachyonic_categories: ["MT", "EA"]
+
+  - aarm_class: "Memory poisoning"
+    esf_phases:
+      primary: [1, 2, 3, 8]
+      rationale: "Classify memory write paths (Phase 1), map which inputs reach persistent state (Phase 2), deploy write-integrity heuristics (Phase 3), structurally constrain what may mutate memory (Phase 8). AARM offers no requirement directly covering this class, which makes it a coverage gap in the specification rather than only in implementations of it."
+    tachyonic_categories: ["MT", "VE"]
+
+  - aarm_class: "Cross-agent propagation"
+    aarm_coverage: "partial (per specification)"
+    esf_phases:
+      primary: [2, 7, 8]
+      rationale: "Map delegation topology (Phase 2), formalize the attenuation invariant that delegated capability never exceeds its parent (Phase 7), enforce it structurally at each sub-agent boundary (Phase 8). AARM marks this class as partially mitigable at the category level; a Phase 8 attenuation invariant is a full structural answer, which makes this a place where a mature implementation can exceed the specification rather than merely satisfy it."
+    tachyonic_categories: ["EA", "MT"]
+
+  - aarm_class: "Side-channel data leakage"
+    aarm_coverage: "partial (per specification)"
+    esf_phases:
+      primary: [4, 5, 9]
+      rationale: "Measure observable channels (Phase 4), model leakage statistically (Phase 5), formally verify non-interference for the channels that matter most (Phase 9). One of the few classes where Phase 9 is the only convincing answer."
+    tachyonic_categories: ["SID", "SPL"]
+
+  - aarm_class: "Environmental manipulation"
+    aarm_coverage: "partial (per specification)"
+    esf_phases:
+      primary: [1, 2, 3, 8]
+      rationale: "Classify environment and supply chain components (Phase 1), map trust boundaries to each (Phase 2), deploy integrity verification (Phase 3), structurally sandbox external components (Phase 8)."
+    tachyonic_categories: ["SC", "VE"]
+
+# What this mapping is for.
+reading:
+
+  conformance_is_a_phase_7_8_capability: >
+    AARM Core (R1-R6) clusters at ESF Phases 7 and 8. Every MUST requirement
+    reaches minimum viability at Phase 7 or 8, and none below. This is the
+    single most useful result of the mapping: AARM conformance is not a
+    procurement checkbox that an organization at Phase 3 can satisfy by buying a
+    product. It can install a conformant system, but it cannot reason about
+    whether conformance continues to hold, because the reasoning requires
+    invariants it has not yet formalized.
+
+  the_determinism_gap: >
+    AARM is explicitly implementation-neutral about how enforcement decisions
+    are reached, permitting deterministic rules, model-based evaluation, or
+    hybrids. Two systems can therefore both claim AARM Core truthfully while
+    sitting at very different ESF phases: one enforcing through Phase 8
+    deterministic invariants, another through a Phase 3 heuristic or a Phase 5
+    model evaluated inline. AARM cannot distinguish them. The determinism of the
+    enforcement decision path is precisely what ESF measures, which makes the
+    two frameworks complementary on the axis that matters most commercially and
+    technically. Conformance answers whether the capability exists; ESF answers
+    how much the answer can be trusted.
+
+  aarm_gives_phase_8_a_target: >
+    The value runs in both directions. Phase 8 (Constrain) is the most abstract
+    phase in the specification, and practitioners routinely ask what a Phase 8
+    control concretely looks like for an agentic system. R1, R6, and R9 are that
+    answer: non-bypassable interception, structural identity binding, and
+    per-action credential scoping are Phase 8 controls with published,
+    externally authored definitions. AARM is the best available worked example
+    of Phase 8 for agentic runtimes.
+
+  conformance_testing_is_unspecified: >
+    AARM defines conformance levels but omits test procedures, delegating
+    evaluation to implementer self-assessment. In ESF terms the specification
+    stops at Phase 7: it states what must always be true without specifying how
+    anyone would measure it (Phase 4) or demonstrate it (Phase 9). That gap is
+    the most useful contribution available to a mature implementation, and it is
+    a stronger position than a registry listing.
+
+  how_to_use_this_file: >
+    Score your system against the ESF rubric first, then read the
+    minimum_viable field for each requirement. Any AARM requirement whose
+    minimum_viable phase exceeds your current score is a requirement you may be
+    able to satisfy in form but cannot yet sustain or verify. Prioritize closing
+    the phase gap rather than the requirement, because the phase gap is what
+    caused the requirement gap.

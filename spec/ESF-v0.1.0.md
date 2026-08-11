@@ -5,7 +5,7 @@
 **Version:** 0.1.0-draft
 **Status:** Living Document
 **Created:** 2026-04-03
-**Last Updated:** 2026-04-03
+**Last Updated:** 2026-08-09
 
 ---
 
@@ -63,7 +63,7 @@ Push a security property toward higher determinism when:
 
 - **High consequence** — failure is catastrophic
 - **Stable understanding** — the threat is well-understood enough to formalize
-- **High frequency** — the check runs constantly; false positives are costly at scale
+- **High frequency** — the check runs constantly; false positives are costly at scale. This is the frequency of the *check*, not of the threat succeeding. A constantly-running check on a rarely-succeeding threat is frequently the strongest candidate for formalization, precisely because it is working (see Phase 4, Measurement Confound)
 - **Boundary enforcement** — it sits at a trust boundary between components
 
 Keep it at lower determinism when:
@@ -400,6 +400,9 @@ This demonstrates the funnel principle in action: 168 attack types in the taxono
 | **Feedback loop** | A mechanism where measurement outcomes inform adjustments to the system being measured |
 | **Labeled data** | Observations tagged with ground truth (true positive, false positive, etc.) that enable supervised learning |
 | **Redundancy** | Deliberate duplication of detection mechanisms that enables cross-validation and resilience |
+| **Inherent rate** | How often a threat would succeed if the control were not operating |
+| **Residual rate** | How often a threat succeeds while the control is operating; what observation actually reports |
+| **Defense effect** | The suppression of a threat's observed rate by a control that is working — the gap between inherent and residual rate, and the reason a well-defended threat looks like a rare one |
 
 **Principles:**
 - Untested heuristics are superstitions — measurement converts belief into knowledge
@@ -407,6 +410,8 @@ This demonstrates the funnel principle in action: 168 attack types in the taxono
 - Red teaming is not optional — adversarial testing reveals failure modes that operational data misses
 - Every failure is a data point — classify failures by type and feed them back to Phase 1 as potential new taxonomy entries
 - Measurement must be continuous, not one-time — heuristic performance degrades as threats evolve
+- Observation reports the residual rate, not the inherent rate — a control that works suppresses the evidence of the threat it defeats, so frequency data systematically understates well-defended threats
+- Only the counterfactual measures a control — adversarial testing supplies the inherent rate that incident data cannot, which is why red teaming is a measurement instrument and not a validation ritual
 
 **Anti-Patterns:**
 - **Launch and forget** — deploying heuristics without ongoing measurement
@@ -414,12 +419,30 @@ This demonstrates the funnel principle in action: 168 attack types in the taxono
 - **Friendly-only testing** — measuring against known threats without adversarial probing
 - **Metric fixation** — optimizing for measurable proxies (false positive rate) at the expense of unmeasured properties (novel threat detection)
 - **Delayed measurement** — accumulating heuristics before establishing measurement infrastructure
+- **Frequency ranking** — prioritizing threats by how often they are observed to succeed. This inverts for well-defended threats: the metric falls as the control improves, so the data argues most strongly for removing the controls that are working best. Distinct from metric fixation, which measures the wrong thing; this measures the right thing with the sign reversed
 
 **Decision Criteria:**
 - Is every heuristic individually instrumented with performance metrics?
 - Is the system regularly subjected to adversarial testing?
 - Do failures produce structured data that feeds back to taxonomy and ontology?
 - Is labeled data being generated that can train statistical models in Phase 5?
+- Does the programme distinguish inherent rate from residual rate, and attribute the difference to specific controls?
+- Would disabling a given control change any metric currently used to justify it? If not, that metric is not measuring the control — it is measuring the absence of the incidents the control prevents
+
+**Measurement Confound: The Defense Effect**
+
+Phase 4 exists to answer whether a defense works. The difficulty is that a defense which works erases its own evidence. The threat stops succeeding, the incident count falls, and the control that produced the result becomes the hardest one to justify.
+
+The field's clearest demonstration is the OWASP GenAI LLM Top 10 2026 release, which ranked its list against a corpus of 7,714 real incidents (6,639 with sufficient detail to classify) weighted at 25 percent against a 75 percent practitioner vote. Ranked on the incident record alone, **prompt injection falls out of the top ten entirely**. Practitioners voted it first. OWASP attributed the gap to a defense effect: teams fight injection hard, so fewer clean exploits reach a public database, and the public count understates a risk that mature teams are spending real money to hold off.
+
+The consequence for an ESF programme is direct. A Phase 4 practice that ranks by observed frequency will deprioritize its best controls, and will do so more confidently the better those controls perform. Frequency data describes the threat landscape *after* the defenses in place — it is an output of the control set, not an independent measurement of it.
+
+Two disciplines follow:
+
+- **Separate the rates.** Record inherent and residual rates as distinct quantities. The difference between them is what the control is worth, and it is the only number that survives the control improving.
+- **Source the counterfactual from adversarial testing.** Incident data cannot supply an inherent rate, because the incidents it would need are the ones the control prevented. Red teaming can: it re-runs the threat against the live control and observes what the control actually stops. This is the strongest argument for the "red teaming is not optional" principle above — without it, a maturing programme's metrics degrade exactly as its security improves.
+
+A related reading error is worth naming. Section 2.3 lists "high frequency" as a criterion for pushing a property toward higher determinism, meaning **the frequency at which the check runs**, not the frequency at which the threat is observed to succeed. The two readings point in opposite directions: a constantly-running check on a rarely-succeeding threat is often exactly the control that has earned formalization.
 
 **Worked Example: Measuring Triage Heuristics in the Tachyonic Pipeline**
 
