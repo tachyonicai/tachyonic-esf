@@ -43,7 +43,7 @@ The ESF is **complementary**, not competitive. The frameworks below describe *wh
 - **OWASP GenAI LLM Top 10 (2026)** tells you *what* the risks are when the model is a component
 - **OWASP Top 10 for Agentic Applications (2026)** tells you *what changes* when the model becomes an actor
 - **MITRE ATLAS** tells you *how adversaries* operate against AI systems
-- **CSA AARM** tells you *what capabilities* an agentic runtime must provide
+- **CSA AARM v1.0** tells you *what capabilities* an agentic runtime must provide
 - **ESF** tells you *how to progressively harden* — from first detection to formal proof
 
 The ESF [maps to all four](/mappings/), version-pinned, so you can assess your maturity against risks and requirements you already track.
@@ -96,7 +96,7 @@ esf/
 │   ├── owasp-llm-top10.yaml          # ESF ↔ OWASP GenAI LLM Top 10 (2026)
 │   ├── owasp-agentic-top10.yaml       # ESF ↔ OWASP Agentic Top 10 (2026)
 │   ├── mitre-atlas.yaml               # ESF ↔ MITRE ATLAS (2026.07)
-│   ├── aarm.yaml                      # ESF ↔ CSA AARM (R1-R9)
+│   ├── aarm.yaml                      # ESF ↔ CSA AARM v1.0 (R1-R9)
 │   └── pipeline-mapping-template.yaml # Map YOUR system to ESF
 └── examples/
     ├── tachyonic-pipeline-mapping.md  # Reference implementation
